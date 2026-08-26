@@ -519,6 +519,10 @@ bool __fastcall ACT1Q1_SeqCallback(D2QuestDataStrc* pQuestData)
 		return false;
 	}
 
+	// Vanilla quirk: guard and call agree here, but this sequences through
+	// pQuest->pfSeqFilter where acts 2-5 sequence through
+	// pQuestData->pfSeqFilter(pQuest). Reproduced as-is;
+	// see ThePhrozenKeep/D2MOO#229 for the full audit.
 	if (IsBadCodePtr((FARPROC)pQuest->pfSeqFilter))
 	{
 		FOG_DisplayAssert("pQuestInfo->pSequence", __FILE__, __LINE__);

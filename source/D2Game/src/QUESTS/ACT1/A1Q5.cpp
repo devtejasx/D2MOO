@@ -678,6 +678,9 @@ bool __fastcall ACT1Q5_SeqCallback(D2QuestDataStrc* pQuestData)
 		return false;
 	}
 
+	// Vanilla bug: this guard validates pQuestData->pfSeqFilter, but the call
+	// below goes through pQuest->pfSeqFilter, so the pointer actually
+	// invoked is never checked. Reproduced as-is; see ThePhrozenKeep/D2MOO#229 for the full audit.
 	if (IsBadCodePtr((FARPROC)pQuestData->pfSeqFilter))
 	{
 		FOG_DisplayAssert("pQuestInfo->pSequence", __FILE__, __LINE__);

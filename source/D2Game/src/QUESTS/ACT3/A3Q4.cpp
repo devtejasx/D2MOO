@@ -583,6 +583,9 @@ bool __fastcall ACT3Q4_SeqCallback(D2QuestDataStrc* pQuestData)
 	D2QuestDataStrc* pQuestData17 = QUESTS_GetQuestData(pQuestData->pGame, QUEST_A3Q3_GIDBINN);
 	if (pQuestData17)
 	{
+		// Vanilla bug: this guard validates pQuestData->pfSeqFilter, but the call
+		// below goes through pQuestData17->pfSeqFilter, so the pointer actually
+		// invoked is never checked. Reproduced as-is; see ThePhrozenKeep/D2MOO#229 for the full audit.
 		if (IsBadCodePtr((FARPROC)pQuestData->pfSeqFilter))
 		{
 			FOG_DisplayAssert("pQuestInfo->pSequence", __FILE__, __LINE__);
