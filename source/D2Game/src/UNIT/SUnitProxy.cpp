@@ -600,7 +600,7 @@ void __fastcall SUNITPROXY_OnClientRemovedFromGame(D2GameStrc* pGame, D2UnitStrc
 }
 
 //D2Game.0x6FCCC7C0
-void __fastcall SUNITPROXY_InitializeNpcEventChain(D2GameStrc* pGame, D2UnitStrc* pUnit)
+void __fastcall SUNITPROXY_InitializeNpcEventChain(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nNewLevel)
 {
     //GetTickCount();
     for (int32_t i = 0; i < pGame->pNpcControl->nArraySize; ++i)
