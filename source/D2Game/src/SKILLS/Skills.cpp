@@ -363,7 +363,7 @@ int32_t __fastcall sub_6FD0F8B0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nV
         return nValue;
     }
     
-    D2UnitStrc* pBloodGolem = sub_6FC7E8B0(pGame, pUnit, 3, 0);
+    D2UnitStrc* pBloodGolem = PLAYERPETS_GetFirstPetByType(pGame, pUnit, 3, 0);
     if (!pBloodGolem || pBloodGolem->dwUnitType != UNIT_MONSTER || pBloodGolem->dwClassId != MONSTER_BLOODGOLEM)
     {
         return nValue;
@@ -609,7 +609,7 @@ int32_t __fastcall sub_6FD0FA00(D2UnitStrc* pUnit, D2UnitStrc* pTarget, uint32_t
 }
 
 //D2Game.0x6FD0FDD0
-void __fastcall sub_6FD0FDD0(D2UnitStrc* pUnit)
+void __fastcall UNITS_ClampStatsAndUpdateAnim(D2UnitStrc* pUnit)
 {
     const int32_t nMaxHp = STATLIST_GetMaxLifeFromUnit(pUnit);
     if (STATLIST_UnitGetStatValue(pUnit, STAT_HITPOINTS, 0) > nMaxHp)
@@ -2887,15 +2887,14 @@ int32_t __fastcall sub_6FD136E0(D2UnitStrc* pUnit, int32_t nSkillId)
 }
 
 //D2Game.0x6FD13800
-void __fastcall D2GAME_AssignSkill_6FD13800(D2UnitStrc* pUnit, int32_t a2, int32_t nSkillId, int32_t nFlags)
+void __fastcall D2GAME_AssignSkill_6FD13800(D2UnitStrc* pUnit, int32_t bIsLeftSkill, int32_t nSkillId, int32_t nFlags)
 {
-    // TODO: a2
     if (nSkillId == SKILL_LEFTHANDSWING)
     {
         return;
     }
 
-    if (!a2 && STATES_CheckState(pUnit, STATE_NOMANAREGEN))
+    if (!bIsLeftSkill && STATES_CheckState(pUnit, STATE_NOMANAREGEN))
     {
         STATES_ToggleState(pUnit, STATE_NOMANAREGEN, 0);
     }
@@ -2907,7 +2906,7 @@ void __fastcall D2GAME_AssignSkill_6FD13800(D2UnitStrc* pUnit, int32_t a2, int32
     }
 
     D2SkillStrc* pRightSkill = nullptr;
-    if (a2)
+    if (bIsLeftSkill)
     {
         SKILLS_SetLeftActiveSkill(pUnit, nSkillId, nFlags);
     }
@@ -2921,10 +2920,10 @@ void __fastcall D2GAME_AssignSkill_6FD13800(D2UnitStrc* pUnit, int32_t a2, int32
     SKILLS_GetSkillInfo(pSkill, &nOwnerGUID, nullptr, nullptr, nullptr);
     if (pUnit && pUnit->dwUnitType == UNIT_PLAYER)
     {
-        D2GAME_PACKETS_SendPacket0x23_6FC3DC60(SUNIT_GetClientFromPlayer(pUnit, __FILE__, __LINE__), 0, pUnit->dwUnitId, a2, nSkillId, nOwnerGUID);
+        D2GAME_PACKETS_SendPacket0x23_6FC3DC60(SUNIT_GetClientFromPlayer(pUnit, __FILE__, __LINE__), 0, pUnit->dwUnitId, bIsLeftSkill, nSkillId, nOwnerGUID);
     }
 
-    if (!a2)
+    if (!bIsLeftSkill)
     {
         if (pRightSkill)
         {

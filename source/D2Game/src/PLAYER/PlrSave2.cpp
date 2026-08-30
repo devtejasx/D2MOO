@@ -66,7 +66,7 @@ struct D2WaypointSaveDataStrc
 //D2Game.0x6FC8CCD0
 void __fastcall PLRSAVE2_WriteMercData(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2SaveHeaderStrc* pMercData)
 {
-    D2UnitStrc* pHireling = sub_6FC7E8B0(pGame, pPlayer, PETTYPE_HIREABLE, 1);
+    D2UnitStrc* pHireling = PLAYERPETS_GetFirstPetByType(pGame, pPlayer, PETTYPE_HIREABLE, 1);
     if (!pHireling)
     {
         return;
@@ -469,7 +469,7 @@ int32_t __fastcall PLRSAVE2_WriteIronGolemSection(D2GameStrc* pGame, D2UnitStrc*
 
     *(uint16_t*)*ppSection = 'fk';
     
-    D2UnitStrc* pIronGolem = sub_6FC7E8B0(pGame, pPlayer, 3, 1);
+    D2UnitStrc* pIronGolem = PLAYERPETS_GetFirstPetByType(pGame, pPlayer, 3, 1);
 
     D2UnitStrc* pGolemItem = nullptr;
     uint8_t bHasIronGolem = 0;
@@ -600,7 +600,7 @@ int32_t __fastcall PLRSAVE2_CreateSaveFile(D2GameStrc* pGame, D2UnitStrc* pPlaye
         *(uint16_t*)ppSection = 'fj';
         ppSection += 2;
 
-        D2UnitStrc* pPet = sub_6FC7E8B0(pGame, pPlayer, 7, 1);
+        D2UnitStrc* pPet = PLAYERPETS_GetFirstPetByType(pGame, pPlayer, 7, 1);
         if (pPet)
         {
             const int32_t nPetSectionSize = sub_6FC8A0F0(pGame, pPet, ppSection, pEnd - ppSection, 0, a7);

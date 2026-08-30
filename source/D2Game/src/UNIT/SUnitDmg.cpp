@@ -2976,7 +2976,7 @@ void __fastcall SUNITDMG_DistributeExperience(D2GameStrc* pGame, D2UnitStrc* pAt
 	}
 
 	const uint32_t nDefenderLevel = STATLIST_GetUnitBaseStat(pDefender, STAT_LEVEL, 0);
-	D2UnitStrc* pPet = sub_6FC7E8B0(pGame, pPlayer, 7, 0);
+	D2UnitStrc* pPet = PLAYERPETS_GetFirstPetByType(pGame, pPlayer, 7, 0);
 	if (pPet)
 	{
 		const uint32_t nPetLevel = STATLIST_GetUnitBaseStat(pPet, STAT_LEVEL, 0);

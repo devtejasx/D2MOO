@@ -430,7 +430,7 @@ void __fastcall sub_6FC7D7A0(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitStrc*
                 D2PetTypeTxt* pOtherPetTypeTxtRecord = DATATBLS_GetPetTypeTxtRecord(nOtherPetType);
                 if (pOtherPetTypeTxtRecord && pOtherPetTypeTxtRecord->wGroup == pPetTypeTxtRecord->wGroup)
                 {
-                    for (D2UnitStrc* pOtherPet = sub_6FC7E8B0(pGame, pPlayer, nOtherPetType, 1); pOtherPet; pOtherPet = sub_6FC7E8B0(pGame, pPlayer, nOtherPetType, 1))
+                    for (D2UnitStrc* pOtherPet = PLAYERPETS_GetFirstPetByType(pGame, pPlayer, nOtherPetType, 1); pOtherPet; pOtherPet = PLAYERPETS_GetFirstPetByType(pGame, pPlayer, nOtherPetType, 1))
                     {
                         sub_6FC7D260(pGame, pPlayer, pOtherPet->dwUnitId, 1);
                     }
@@ -976,7 +976,7 @@ void __fastcall PLAYERPETS_IteratePets(D2GameStrc* pGame, D2UnitStrc* pPlayer, v
 }
 
 //D2Game.0x6FC7E8B0
-D2UnitStrc* __fastcall sub_6FC7E8B0(D2GameStrc* pGame, D2UnitStrc* pPlayer, int32_t nPetType, int32_t a4)
+D2UnitStrc* __fastcall PLAYERPETS_GetFirstPetByType(D2GameStrc* pGame, D2UnitStrc* pPlayer, int32_t nPetType, int32_t a4)
 {
     D2PlayerDataStrc* pPlayerData = UNITS_GetPlayerData(pPlayer);
     if (!pPlayerData)

@@ -101,7 +101,7 @@ int32_t __fastcall sub_6FC895E0(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2SavedI
     {
         UNITS_ChangeAnimMode(pItem, IMODE_ONCURSOR);
         INVENTORY_SetCursorItem(pPlayer->pInventory, pItem);
-        if (!sub_6FC4B9D0(pGame, pPlayer, pItem))
+        if (!ITEMS_FinalizeCursorItem(pGame, pPlayer, pItem))
         {
             return 12;
         }
@@ -222,7 +222,7 @@ int32_t __fastcall sub_6FC898F0(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitSt
     {
         UNITS_ChangeAnimMode(pItem, IMODE_ONCURSOR);
         INVENTORY_SetCursorItem(pPlayer->pInventory, pItem);
-        if (!sub_6FC4B9D0(pGame, pPlayer, pItem))
+        if (!ITEMS_FinalizeCursorItem(pGame, pPlayer, pItem))
         {
             return 12;
         }

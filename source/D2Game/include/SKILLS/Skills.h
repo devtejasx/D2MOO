@@ -126,7 +126,7 @@ int32_t __fastcall sub_6FD0F8B0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nV
 //D2Game.0x6FD0FA00
 int32_t __fastcall sub_6FD0FA00(D2UnitStrc* pUnit, D2UnitStrc* pTarget, uint32_t nAuraFilter);
 //D2Game.0x6FD0FDD0
-void __fastcall sub_6FD0FDD0(D2UnitStrc* pUnit);
+void __fastcall UNITS_ClampStatsAndUpdateAnim(D2UnitStrc* pUnit);
 //D2Game.0x6FD0FE50
 void __fastcall sub_6FD0FE50(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t(__fastcall* pCallback)(D2AuraCallbackStrc*, D2UnitStrc*), void* pArgs);
 //D2Game.0x6FD0FE80
@@ -236,7 +236,7 @@ void __fastcall D2GAME_MONSTERS_AiFunction10_6FD13610(D2GameStrc* pGame, D2UnitS
 //D2Game.0x6FD136E0
 int32_t __fastcall sub_6FD136E0(D2UnitStrc* pUnit, int32_t nSkillId);
 //D2Game.0x6FD13800
-void __fastcall D2GAME_AssignSkill_6FD13800(D2UnitStrc* pUnit, int32_t a2, int32_t nSkillId, int32_t nFlags);
+void __fastcall D2GAME_AssignSkill_6FD13800(D2UnitStrc* pUnit, int32_t bIsLeftSkill, int32_t nSkillId, int32_t nFlags);
 //D2Game.0x6FD13B20
 D2UnitStrc* __fastcall D2GAME_CreateLinkPortal_6FD13B20(D2GameStrc* pGame, D2UnitStrc* pPortal, int32_t nDestLevel, int32_t nSourceLevel);
 //D2Game.0x6FD13DF0
