@@ -3344,7 +3344,7 @@ int32_t __fastcall D2GAME_PACKETCALLBACK_Rcv0x46_MercInteract_6FC87B00(D2GameStr
     }
 
     D2UnitStrc* pMerc = SUNIT_GetServerUnit(pGame, UNIT_MONSTER, nMercGUID);
-    if (!pMerc || sub_6FC7E8B0(pGame, pUnit, 7, 0) != pMerc)
+    if (!pMerc || PLAYERPETS_GetFirstPetByType(pGame, pUnit, 7, 0) != pMerc)
     {
         return 1;
     }
@@ -3376,7 +3376,7 @@ int32_t __fastcall D2GAME_PACKETCALLBACK_Rcv0x47_MoveMerc_6FC87CE0(D2GameStrc* p
         }
 
         D2UnitStrc* pMerc = SUNIT_GetServerUnit(pGame, UNIT_MONSTER, nMercGUID);
-        if (pMerc && sub_6FC7E8B0(pGame, pUnit, 7, 0) == pMerc)
+        if (pMerc && PLAYERPETS_GetFirstPetByType(pGame, pUnit, 7, 0) == pMerc)
         {
             AIGENERAL_FreeAllAiCommands(pGame, pMerc);
             D2AiCmdStrc aiCmd = {};
@@ -3888,7 +3888,7 @@ int32_t __fastcall D2GAME_PACKETCALLBACK_Rcv0x61_DropPickupMercItem_6FC88930(D2G
         return 0;
     }
     
-    D2UnitStrc* pMerc = sub_6FC7E8B0(pGame, pUnit, 7, 0);
+    D2UnitStrc* pMerc = PLAYERPETS_GetFirstPetByType(pGame, pUnit, 7, 0);
     if (!pMerc || SUNIT_IsDead(pMerc) || !UNITFINDS_AreUnitsInNeighboredRooms(pMerc, pUnit))
     {
         return 0;
@@ -4002,7 +4002,7 @@ int32_t __fastcall D2GAME_PACKETCALLBACK_Rcv0x61_DropPickupMercItem_6FC88930(D2G
         UNITS_RefreshInventory(pMerc, 1);
         D2UnitStrc* pCursorItem = ITEMS_Duplicate(pGame, pEquippedItem, pUnit, 1);
         INVENTORY_SetCursorItem(pUnit->pInventory, pCursorItem);
-        sub_6FC4B9D0(pGame, pUnit, pCursorItem);
+        ITEMS_FinalizeCursorItem(pGame, pUnit, pCursorItem);
         ITEMS_SetItemFlag(pEquippedItem, IFLAG_QUANTITY, 1);
         D2GAME_ITEMS_UpdateInventoryItems_6FC45050(pGame, pMerc, 0, 0);
         //D2Game_10034_Return(0);
@@ -4092,7 +4092,7 @@ int32_t __fastcall D2GAME_MERCS_EquipItem_6FC88D10(D2GameStrc* pGame, D2UnitStrc
     {
         D2UnitStrc* pCursorItem = ITEMS_Duplicate(pGame, pExchangeItem, pPlayer, 1);
         INVENTORY_SetCursorItem(pPlayer->pInventory, pCursorItem);
-        sub_6FC4B9D0(pGame, pPlayer, pCursorItem);
+        ITEMS_FinalizeCursorItem(pGame, pPlayer, pCursorItem);
     }
 
     D2GAME_ITEMS_UpdateInventoryItems_6FC45050(pGame, pMerc, 0, 0);

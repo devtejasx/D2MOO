@@ -477,7 +477,7 @@ void __fastcall SKILLS_CurseStateCallback_BasicAura(D2UnitStrc* pUnit, int32_t n
     }
 
     D2GAME_RefreshPassiveSkills_6FD14CC0(pUnit);
-    sub_6FD0FDD0(pUnit);
+    UNITS_ClampStatsAndUpdateAnim(pUnit);
 }
 
 //D2Game.0x6FD19020

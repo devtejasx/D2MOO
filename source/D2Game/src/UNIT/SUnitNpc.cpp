@@ -1053,7 +1053,7 @@ void __fastcall sub_6FCC7FA0(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitStrc*
 //D2Game.0x6FCC8430
 void __fastcall sub_6FCC8430(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
-    if (sub_6FC7E8B0(pGame, pUnit, 7, 0))
+    if (PLAYERPETS_GetFirstPetByType(pGame, pUnit, 7, 0))
     {
         sub_6FC7E310(pGame, pUnit, CLIENTS_GetUnitX(pUnit), CLIENTS_GetUnitY(pUnit));
     }
@@ -1067,7 +1067,7 @@ void __fastcall sub_6FCC84D0(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitStrc*
         return;
     }
 
-    D2UnitStrc* pHireling = sub_6FC7E8B0(pGame, pPlayer, 7, 0);
+    D2UnitStrc* pHireling = PLAYERPETS_GetFirstPetByType(pGame, pPlayer, 7, 0);
     if (pHireling)
     {
         AIGENERAL_SetOwnerData(pGame, pHireling, -1u, UNIT_MONSTER, 0, 0);
@@ -1694,7 +1694,7 @@ void __fastcall D2GAME_NPC_ResurrectMerc_6FCC9350(D2GameStrc* pGame, D2UnitStrc*
     }
     }
 
-    D2UnitStrc* pHireling = sub_6FC7E8B0(pGame, pPlayer, 7, 1);
+    D2UnitStrc* pHireling = PLAYERPETS_GetFirstPetByType(pGame, pPlayer, 7, 1);
     if (!pHireling)
     {
         D2ClientStrc* pClient = SUNIT_GetClientFromPlayer(pPlayer, __FILE__, __LINE__);
@@ -2893,9 +2893,9 @@ void __fastcall D2GAME_NPC_AssignMercenary_6FCCB520(D2GameStrc* pGame, D2UnitStr
         return;
     }
 
-    if (!pGame->bExpansion || !sub_6FC7E8B0(pGame, pPlayer, 7, 1))
+    if (!pGame->bExpansion || !PLAYERPETS_GetFirstPetByType(pGame, pPlayer, 7, 1))
     {
-        if (!pGame->bExpansion && sub_6FC7E8B0(pGame, pPlayer, 7, 0))
+        if (!pGame->bExpansion && PLAYERPETS_GetFirstPetByType(pGame, pPlayer, 7, 0))
         {
             return;
         }

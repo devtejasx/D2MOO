@@ -51,7 +51,7 @@ void __fastcall sub_6FC42050(D2UnitStrc* pItem, D2ClientStrc* pClient);
 //D2Game.0x6FC420B0
 void __fastcall sub_6FC420B0(D2UnitStrc* pItem, D2ClientStrc* pClient);
 //D2Game.0x6FC42120
-int32_t __fastcall sub_6FC42120(D2UnitStrc* pUnit, D2UnitStrc* pItem, int32_t a3);
+int32_t __fastcall ITEMS_UpdateScrollBookSkill(D2UnitStrc* pUnit, D2UnitStrc* pItem, int32_t a3);
 //D2Game.0x6FC42310
 void __fastcall D2GAME_ITEMS_UpdateItemStatlist_6FC42310(D2GameStrc* pGame, D2UnitStrc* pItem, D2UnitStrc* pUnit, int32_t a4);
 //D2Game.0x6FC424E0
@@ -79,7 +79,7 @@ void __fastcall sub_6FC43AF0(D2UnitStrc* pUnit, D2UnitStrc* pItem, int32_t nQuan
 //D2Game.0x6FC43BF0
 int32_t __fastcall sub_6FC43BF0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pItem);
 //D2Game.0x6FC43E60
-int32_t __fastcall sub_6FC43E60(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pItem, int32_t bRemove, int32_t nPage, const char* szFile, int32_t nLine);
+int32_t __fastcall ITEMS_StoreItemAtFreePage(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pItem, int32_t bRemove, int32_t nPage, const char* szFile, int32_t nLine);
 //D2Game.0x6FC44030
 void __fastcall sub_6FC44030(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nItemGUID);
 //D2Game.0x6FC44410
@@ -187,7 +187,7 @@ void __fastcall sub_6FC4B740(D2UnitStrc* pUnit, D2UnitStrc* pItem);
 //D2Game.0x6FC4B830
 void __fastcall sub_6FC4B830(D2GameStrc* pGame, D2UnitStrc* pUnit);
 //D2Game.0x6FC4B9D0
-int32_t __fastcall sub_6FC4B9D0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pItem);
+int32_t __fastcall ITEMS_FinalizeCursorItem(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pItem);
 //D2Game.0x6FC4BA50
 void __fastcall sub_6FC4BA50(D2GameStrc* pGame, D2UnitStrc* pUnit);
 //D2Game.0x6FC4BB90

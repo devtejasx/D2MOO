@@ -368,7 +368,7 @@ void __fastcall sub_6FC420B0(D2UnitStrc* pItem, D2ClientStrc* pClient)
 }
 
 //D2Game.0x6FC42120
-int32_t __fastcall sub_6FC42120(D2UnitStrc* pUnit, D2UnitStrc* pItem, int32_t a3)
+int32_t __fastcall ITEMS_UpdateScrollBookSkill(D2UnitStrc* pUnit, D2UnitStrc* pItem, int32_t a3)
 {
     D2_ASSERT(pItem);
 
@@ -535,7 +535,7 @@ void __fastcall D2GAME_ITEMS_UpdateItemStatlist_6FC42310(D2GameStrc* pGame, D2Un
 
     if (pUnit->dwUnitType == UNIT_PLAYER)
     {
-        sub_6FC42120(pUnit, pItem, 1);
+        ITEMS_UpdateScrollBookSkill(pUnit, pItem, 1);
     }
 
     D2UnitStrc* pMainWeapon = 0;
@@ -603,7 +603,7 @@ void __fastcall D2GAME_ITEMS_UpdateTransferredProperties_6FC424E0(D2GameStrc* pG
 
     if (pTarget->dwUnitType == UNIT_PLAYER)
     {
-        sub_6FC42120(pTarget, pItem, 0);
+        ITEMS_UpdateScrollBookSkill(pTarget, pItem, 0);
     }
 
     if (bUpdateVitals)
@@ -1225,7 +1225,7 @@ int32_t __fastcall D2GAME_PickupItem_6FC43340(D2GameStrc* pGame, D2UnitStrc* pUn
 
     if (!ITEMS_CheckIfBeltable(pItem) || !ITEMS_CheckIfAutoBeltable(pUnit->pInventory, pItem) || !INVENTORY_PlaceItemInFreeBeltSlot(pUnit->pInventory, pItem))
     {
-        if (sub_6FC43E60(pGame, pUnit, pItem, 1, 0, __FILE__, __LINE__))
+        if (ITEMS_StoreItemAtFreePage(pGame, pUnit, pItem, 1, 0, __FILE__, __LINE__))
         {
             return 1;
         }
@@ -1255,7 +1255,7 @@ int32_t __fastcall D2GAME_PickupItem_6FC43340(D2GameStrc* pGame, D2UnitStrc* pUn
 
     if (!pUnit->dwUnitType)
     {
-        sub_6FC42120(pUnit, pItem, 1);
+        ITEMS_UpdateScrollBookSkill(pUnit, pItem, 1);
     }
 
     if (ITEMS_IsCharmUsable(pItem, pUnit))
@@ -1500,7 +1500,7 @@ int32_t __fastcall sub_6FC43BF0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc
 }
 
 //D2Game.0x6FC43E60
-int32_t __fastcall sub_6FC43E60(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pItem, int32_t bRemove, int32_t nPage, const char* szFile, int32_t nLine)
+int32_t __fastcall ITEMS_StoreItemAtFreePage(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pItem, int32_t bRemove, int32_t nPage, const char* szFile, int32_t nLine)
 {
     D2_ASSERT(pGame);
 
@@ -1543,7 +1543,7 @@ int32_t __fastcall sub_6FC43E60(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc
 
     if (pUnit->dwUnitType == UNIT_PLAYER)
     {
-        sub_6FC42120(pUnit, pItem, 1);
+        ITEMS_UpdateScrollBookSkill(pUnit, pItem, 1);
     }
 
     if (ITEMS_IsCharmUsable(pItem, pUnit))
@@ -1739,7 +1739,7 @@ int32_t __fastcall D2GAME_PlaceItem_6FC44410(const char* szFile, int32_t nLine, 
 
     if (ITEMS_GetInvPage(pItem) != INVPAGE_STASH && pPlayer->dwUnitType == UNIT_PLAYER)
     {
-        sub_6FC42120(pPlayer, pItem, 1);
+        ITEMS_UpdateScrollBookSkill(pPlayer, pItem, 1);
     }
 
     pItem->dwFlags &= ~UNITFLAG_TARGETABLE;
@@ -1865,7 +1865,7 @@ int32_t __fastcall sub_6FC446B0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nI
 
     if (pUnit->dwUnitType == UNIT_PLAYER)
     {
-        sub_6FC42120(pUnit, pItem, 0);
+        ITEMS_UpdateScrollBookSkill(pUnit, pItem, 0);
     }
 
     const uint8_t nInvPage = ITEMS_GetInvPage(pItem);
@@ -2607,7 +2607,7 @@ void __fastcall sub_6FC45930(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* p
 
             if (pUnit->dwUnitType == UNIT_PLAYER)
             {
-                sub_6FC42120(pUnit, pBeltItem, 0);
+                ITEMS_UpdateScrollBookSkill(pUnit, pBeltItem, 0);
             }
 
             ITEMS_SetInvPage(pBeltItem, INVPAGE_INVENTORY);
@@ -3341,7 +3341,7 @@ int32_t __fastcall sub_6FC46D40(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nC
 
     if (pUnit->dwUnitType == UNIT_PLAYER)
     {
-        sub_6FC42120(pUnit, pGridItem, 0);
+        ITEMS_UpdateScrollBookSkill(pUnit, pGridItem, 0);
     }
 
     ITEMS_SetCellOverlap(pGridItem, nInvPage);
@@ -3382,7 +3382,7 @@ int32_t __fastcall sub_6FC46D40(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nC
 
     if (pUnit->dwUnitType == UNIT_PLAYER)
     {
-        sub_6FC42120(pUnit, pCursorItem, 1);
+        ITEMS_UpdateScrollBookSkill(pUnit, pCursorItem, 1);
     }
 
     if (ITEMS_IsCharmUsable(pCursorItem, pUnit))
@@ -4204,7 +4204,7 @@ int32_t __fastcall sub_6FC48940(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nI
 
     if (pUnit->dwUnitType == UNIT_PLAYER)
     {
-        sub_6FC42120(pUnit, pItem, 1);
+        ITEMS_UpdateScrollBookSkill(pUnit, pItem, 1);
     }
 
     pItem->dwFlags &= ~UNITFLAG_TARGETABLE;
@@ -4278,7 +4278,7 @@ int32_t __fastcall sub_6FC48B40(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nI
 
     if (pUnit->dwUnitType == UNIT_PLAYER)
     {
-        sub_6FC42120(pUnit, pItem, 0);
+        ITEMS_UpdateScrollBookSkill(pUnit, pItem, 0);
     }
 
     pItem->dwFlags &= ~UNITFLAG_TARGETABLE;
@@ -4341,7 +4341,7 @@ int32_t __fastcall sub_6FC48D50(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nC
     INVENTORY_SetCursorItem(pUnit->pInventory, pBeltItem);
     if (pUnit->dwUnitType == UNIT_PLAYER)
     {
-        sub_6FC42120(pUnit, pBeltItem, 0);
+        ITEMS_UpdateScrollBookSkill(pUnit, pBeltItem, 0);
     }
 
     pBeltItem->dwFlags &= ~UNITFLAG_TARGETABLE;
@@ -4366,7 +4366,7 @@ int32_t __fastcall sub_6FC48D50(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nC
 
     if (pUnit->dwUnitType == UNIT_PLAYER)
     {
-        sub_6FC42120(pUnit, pCursorItem, 1);
+        ITEMS_UpdateScrollBookSkill(pUnit, pCursorItem, 1);
     }
 
     pCursorItem->dwFlags &= ~UNITFLAG_TARGETABLE;
@@ -4478,7 +4478,7 @@ int32_t __fastcall sub_6FC49220(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nI
 
     if (bUseOnMerc && pUnit->dwUnitType == UNIT_PLAYER && pGame->bExpansion && (ITEMS_CheckItemTypeId(pItem, ITEMTYPE_HEALING_POTION) || ITEMS_CheckItemTypeId(pItem, ITEMTYPE_THAWING_POTION) || ITEMS_CheckItemTypeId(pItem, ITEMTYPE_ANTIDOTE_POTION)))
     {
-        D2UnitStrc* pMerc = sub_6FC7E8B0(pGame, pUnit, PETTYPE_HIREABLE, 0);
+        D2UnitStrc* pMerc = PLAYERPETS_GetFirstPetByType(pGame, pUnit, PETTYPE_HIREABLE, 0);
         if (pMerc && !SKILLITEM_pSpell_Handler(pGame, pMerc, pItem, pItem, nX, nY))
         {
             return 0;
@@ -5452,7 +5452,7 @@ int32_t __fastcall sub_6FC4AD80(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitSt
 
                                     if (pPlayer->dwUnitType == UNIT_PLAYER)
                                     {
-                                        sub_6FC42120(pPlayer, pCorpseItem, 1);
+                                        ITEMS_UpdateScrollBookSkill(pPlayer, pCorpseItem, 1);
                                     }
 
                                     sub_6FC45300(pPlayer);
@@ -5470,7 +5470,7 @@ int32_t __fastcall sub_6FC4AD80(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitSt
                     }
                     else
                     {
-                        if (sub_6FC43E60(pGame, pPlayer, pCorpseItem, 0, 0, __FILE__, __LINE__))
+                        if (ITEMS_StoreItemAtFreePage(pGame, pPlayer, pCorpseItem, 0, 0, __FILE__, __LINE__))
                         {
                             sub_6FC512C0(pGame, pCorpseItem);
                             sub_6FC51310(pGame, pCorpseItem);
@@ -5521,7 +5521,7 @@ int32_t __fastcall sub_6FC4AD80(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitSt
                     D2_ASSERT(pItem);
                     if (pPlayer->dwUnitType == UNIT_PLAYER)
                     {
-                        sub_6FC42120(pPlayer, pItem, 1);
+                        ITEMS_UpdateScrollBookSkill(pPlayer, pItem, 1);
                     }
 
                     pItem->dwFlags &= ~UNITFLAG_TARGETABLE;
@@ -5542,7 +5542,7 @@ int32_t __fastcall sub_6FC4AD80(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitSt
             }
             else if (v22)
             {
-                if (sub_6FC43E60(pGame, pPlayer, pItem, 0, 0, __FILE__, __LINE__))
+                if (ITEMS_StoreItemAtFreePage(pGame, pPlayer, pItem, 0, 0, __FILE__, __LINE__))
                 {
                     ++nCounter;
                     ITEMS_SetItemFlag(pItem, IFLAG_NEWITEM, 1);
@@ -5866,7 +5866,7 @@ void __fastcall sub_6FC4B830(D2GameStrc* pGame, D2UnitStrc* pUnit)
             {
                 if (ITEMS_GetInvPage(pItem) == INVPAGE_INVENTORY)
                 {
-                    sub_6FC42120(pUnit, pItem, 1);
+                    ITEMS_UpdateScrollBookSkill(pUnit, pItem, 1);
 
                     --nInventoryItemCounter;
                     if (!nInventoryItemCounter)
@@ -5882,7 +5882,7 @@ void __fastcall sub_6FC4B830(D2GameStrc* pGame, D2UnitStrc* pUnit)
 }
 
 //D2Game.0x6FC4B9D0
-int32_t __fastcall sub_6FC4B9D0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pItem)
+int32_t __fastcall ITEMS_FinalizeCursorItem(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pItem)
 {
     D2_ASSERT(pUnit);
     D2_ASSERT(pItem);
