@@ -1,6 +1,7 @@
 #include "AI/AiThink.h"
 
 #include <algorithm>
+#include <limits>
 
 #include <D2BitManip.h>
 #include <D2Math.h>
@@ -728,7 +729,7 @@ void __fastcall AITHINK_Fn008_SandRaider(D2GameStrc* pGame, D2UnitStrc* pUnit, D
 	{
 		D2SandRaiderAiCallbackArgStrc arg = {};
 		arg.pTarget = nullptr;
-		arg.nDistance = INT_MAX;
+		arg.nDistance = std::numeric_limits<int32_t>::max();
 		sub_6FCF1E80(pGame, pUnit, &arg, AITHINK_TargetCallback_SandRaider, 1);
 
 		if (arg.pTarget)
@@ -1562,7 +1563,7 @@ void __fastcall AITHINK_Fn018_PantherWoman(D2GameStrc* pGame, D2UnitStrc* pUnit,
 	{
 		D2PantherAiCallbackArgStrc arg = {};
 		arg.pTarget = nullptr;
-		arg.nDistance = INT_MAX;
+		arg.nDistance = std::numeric_limits<int32_t>::max();
 		sub_6FCF1E80(pGame, pUnit, &arg, AITHINK_TargetCallback_Panther, 1);
 
 		if (arg.pTarget && arg.nDistance > AI_GetParamValue(pGame, pAiTickParam, PANTHERWOMAN_AI_PARAM_PACK_DISTANCE) * AI_GetParamValue(pGame, pAiTickParam, PANTHERWOMAN_AI_PARAM_PACK_DISTANCE))
@@ -4211,7 +4212,7 @@ void __fastcall AITHINK_Fn049_ZakarumPriest(D2GameStrc* pGame, D2UnitStrc* pUnit
 	D2ZakarumPriestAiCallbackArgStrc arg = {};
 	arg.pTarget = nullptr;
 	arg.nCounter = 0;
-	arg.nMaxLifePercentage = INT_MAX;
+	arg.nMaxLifePercentage = std::numeric_limits<int32_t>::max();
 	arg.nMaxDistance = AI_GetParamValue(pGame, pAiTickParam, ZAKARUMPRIEST_AI_PARAM_HEAL_RANGE) * AI_GetParamValue(pGame, pAiTickParam, ZAKARUMPRIEST_AI_PARAM_HEAL_RANGE);
 	sub_6FCF1E80(pGame, pUnit, &arg, AITHINK_TargetCallback_ZakarumPriest, 1);
 
@@ -4291,7 +4292,7 @@ D2UnitStrc* __fastcall AITHINK_TargetCallback_ZakarumPriest(D2GameStrc* pGame, D
 
 	if (pArg->nMaxLifePercentage <= 0)
 	{
-		pArg->nMaxLifePercentage = INT_MAX;
+		pArg->nMaxLifePercentage = std::numeric_limits<int32_t>::max();
 	}
 
 	++pArg->nCounter;
@@ -4315,9 +4316,9 @@ enum D2C_MephistoAIParams
 D2UnitStrc* __fastcall AITHINK_FindTargetForMephisto(D2GameStrc* pGame, D2UnitStrc* pUnit, D2MonStatsTxt* pMonStatsTxtRecord, D2UnitStrc* a4)
 {
 	D2MephistoAiCallbackArgStrc arg = {};
-	arg.unk0x04 = INT_MAX;
-	arg.unk0x10 = INT_MAX;
-	arg.unk0x18 = INT_MAX;
+	arg.unk0x04 = std::numeric_limits<int32_t>::max();
+	arg.unk0x10 = std::numeric_limits<int32_t>::max();
+	arg.unk0x18 = std::numeric_limits<int32_t>::max();
 
 	sub_6FCF1E80(pGame, pUnit, &arg, AITHINK_TargetCallback_Mephisto, 1);
 
@@ -4703,13 +4704,13 @@ void __fastcall AITHINK_Fn146_UberMephisto(D2GameStrc* pGame, D2UnitStrc* pUnit,
 
 	// UBER TWEAK START
 	D2UbersAiCallbackArgStrc arg_target = {};
-	arg_target.nDistance = INT_MAX;
+	arg_target.nDistance = std::numeric_limits<int32_t>::max();
 	sub_6FCF1E80(pGame, pAiTickParam->pTarget ? pAiTickParam->pTarget : pUnit, &arg_target, AIUTIL_TargetCallback_Ubers, 1);
 	BOOL bAlone = (arg_target.nUberBaal == 0 && arg_target.nUberDiablo == 0);
 	if (bAlone && pAiTickParam->pTarget)
 	{
 		D2UbersAiCallbackArgStrc arg_self = {};
-		// arg_self.nDistance = INT_MAX; // BUG: this field isn't initialized?
+		// arg_self.nDistance = std::numeric_limits<int32_t>::max(); // BUG: this field isn't initialized?
 		sub_6FCF1E80(pGame, pUnit, &arg_self, AIUTIL_TargetCallback_Ubers, 1);
 		bAlone = (arg_self.nUberBaal == 0 && arg_self.nUberDiablo == 0);
 	}
@@ -5724,9 +5725,9 @@ void __fastcall AITHINK_Fn065_FetishShaman(D2GameStrc* pGame, D2UnitStrc* pUnit,
 		}
 
 		D2FetishShamanAiCallbackArgStrc arg = {};
-		arg.nSquaredDistanceToClosestDeadTarget = INT_MAX;
+		arg.nSquaredDistanceToClosestDeadTarget = std::numeric_limits<int32_t>::max();
 		arg.nMaxSearchRangeSquared = AI_GetParamValue(pGame, pAiTickParam, FETISHSHAMAN_AI_PARAM_HEAL_SEARCH_RANGE) * AI_GetParamValue(pGame, pAiTickParam, FETISHSHAMAN_AI_PARAM_HEAL_SEARCH_RANGE);
-		arg.nSquaredDistanceToClosestAliveTarget = INT_MAX;
+		arg.nSquaredDistanceToClosestAliveTarget = std::numeric_limits<int32_t>::max();
 		arg.nHealCapability = AI_GetParamValue(pGame, pAiTickParam, FETISHSHAMAN_AI_PARAM_HEAL_CAPABILITY);
 		sub_6FCF1E80(pGame, pUnit, &arg, AITHINK_TargetCallback_FetishShaman, 1);
 
@@ -6451,8 +6452,8 @@ void __fastcall AITHINK_Fn074_OblivionKnight(D2GameStrc* pGame, D2UnitStrc* pUni
 {
 	D2OblivionKnightAiCallbackArgStrc arg = {};
 	arg.unk0x08 = 2500;
-	arg.unk0x0C = INT_MAX;
-	arg.unk0x10 = INT_MAX;
+	arg.unk0x0C = std::numeric_limits<int32_t>::max();
+	arg.unk0x10 = std::numeric_limits<int32_t>::max();
 	sub_6FCF1E80(pGame, pUnit, &arg, AITHINK_TargetCallback_OblivionKnight, 1);
 
 	D2UnitStrc* pTarget = arg.unk0x00;
@@ -7500,7 +7501,7 @@ void __fastcall AITHINK_Fn095_PantherJavelin(D2GameStrc* pGame, D2UnitStrc* pUni
 	{
 		D2PantherAiCallbackArgStrc arg = {};
 		arg.pTarget = nullptr;
-		arg.nDistance = INT_MAX;
+		arg.nDistance = std::numeric_limits<int32_t>::max();
 
 		sub_6FCF1E80(pGame, pUnit, &arg, AITHINK_TargetCallback_Panther, 1);
 
@@ -12787,13 +12788,13 @@ void __fastcall AITHINK_Fn147_UberDiablo(D2GameStrc* pGame, D2UnitStrc* pUnit, D
 
 	// UBER TWEAK START
 	D2UbersAiCallbackArgStrc arg_target = {};
-	arg_target.nDistance = INT_MAX;
+	arg_target.nDistance = std::numeric_limits<int32_t>::max();
 	sub_6FCF1E80(pGame, pTarget ? pTarget : pUnit, &arg_target, AIUTIL_TargetCallback_Ubers, 1);
 	BOOL bAlone = (arg_target.nUberBaal == 0 && arg_target.nUberMephisto == 0);
 	if (bAlone && pTarget)
 	{
 		D2UbersAiCallbackArgStrc arg_self = {};
-		arg_self.nDistance = INT_MAX;
+		arg_self.nDistance = std::numeric_limits<int32_t>::max();
 		sub_6FCF1E80(pGame, pUnit, &arg_self, AIUTIL_TargetCallback_Ubers, 1);
 		bAlone = (arg_self.nUberBaal == 0 && arg_self.nUberMephisto == 0);
 	}
@@ -14445,8 +14446,8 @@ void __fastcall AITHINK_Fn106_143_ShadowMaster(D2GameStrc* pGame, D2UnitStrc* pU
 	{
 		D2ShadowMasterAiCallbackArgStrc arg = {};
 		arg.unk0x00 = pOwner;
-		arg.unk0x08 = INT_MAX;
-		arg.unk0x14 = INT_MAX;
+		arg.unk0x08 = std::numeric_limits<int32_t>::max();
+		arg.unk0x14 = std::numeric_limits<int32_t>::max();
 
 		sub_6FCF1E80(pGame, pUnit, &arg, AITHINK_TargetCallback_ShadowMaster, 1);
 
@@ -17490,7 +17491,7 @@ int32_t __fastcall sub_6FCF0E40_inline(D2GameStrc* pGame, D2UnitStrc* pUnit, D2A
 
 	D2AiCallback11ArgStrc arg = {};
 	arg.pTarget = nullptr;
-	arg.nDistance = INT_MAX;
+	arg.nDistance = std::numeric_limits<int32_t>::max();
 	arg.unk0x08 = pAiTickParam->pTarget;
 	sub_6FCF1E80(pGame, pUnit, &arg, nullptr, 11);
 
