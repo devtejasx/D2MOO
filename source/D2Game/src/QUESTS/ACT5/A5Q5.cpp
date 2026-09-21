@@ -1,5 +1,7 @@
 #include "QUESTS/ACT5/A5Q5.h"
 
+#include <iterator>
+
 #include <DataTbls/LevelsIds.h>
 #include <DataTbls/MonsterIds.h>
 #include <DataTbls/ObjectsIds.h>
@@ -176,7 +178,7 @@ void __fastcall ACT5Q5_SpawnAncientMonsters(D2QuestDataStrc* pQuestData, D2UnitS
 //D2Game.0x6FCB6A50
 void __fastcall ACT5Q5_DeactivateAncientMonsters(D2GameStrc* pGame, D2QuestDataStrc* pQuestData, D2Act5Quest5Strc* pQuestDataEx)
 {
-	for (int32_t i = 0; i < 3; ++i)
+	for (size_t i = 0; i < std::size(pQuestDataEx->bAncientMonsterSpawned); ++i)
 	{
 		if (pQuestDataEx->bAncientMonsterSpawned[i])
 		{
@@ -213,7 +215,7 @@ void __fastcall ACT5Q5_DeactivateAncientMonsters(D2GameStrc* pGame, D2QuestDataS
 
 	pQuestDataEx->bAncientsActivated = 0;
 
-	for (int32_t i = 0; i < 3; ++i)
+	for (size_t i = 0; i < std::size(pQuestDataEx->bAncienStatueRespawned); ++i)
 	{
 		pQuestDataEx->bAncienStatueRespawned[i] = 0;
 		D2UnitStrc* pAncientStatue = SUNIT_GetServerUnit(pQuestData->pGame, UNIT_OBJECT, pQuestDataEx->nAncientStatueGUID[i]);
@@ -453,7 +455,7 @@ void __fastcall ACT5Q5_Callback11_ScrollMessage(D2QuestDataStrc* pQuestData, D2Q
 					++j;
 					if (j >= 3)
 					{
-						for (int32_t k = 0; k < 3; ++k)
+						for (size_t k = 0; k < std::size(pUnit); ++k)
 						{
 							UNITS_ChangeAnimMode(pUnit[k], OBJMODE_SPECIAL1);
 							UNITS_FreeCollisionPath(pUnit[k]);
@@ -777,7 +779,7 @@ bool __fastcall ACT5Q5_Timer_RespawnAncientStatueObjects(D2GameStrc* pGame, D2Qu
 	}
 
 	bool bStatueNotFound = false;
-	for (int32_t i = 0; i < 3; ++i)
+	for (size_t i = 0; i < std::size(pQuestDataEx->bAncienStatueRespawned); ++i)
 	{
 		if (pQuestDataEx->bAncienStatueRespawned[i])
 		{
