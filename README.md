@@ -47,6 +47,8 @@ Otherwise have a look at the [Advanced build and run](./doc/AdvancedBuildAndRun.
 
 An embryo of documentation is available in the repository's [doc](./doc/) folder.
 
+Before opening a pull request, have a look at the [code standards](./doc/CodeStandards.md).
+
 ## D2MOO Debugger (Experimental!)
 
 Start the game with the `-debug` argument.
