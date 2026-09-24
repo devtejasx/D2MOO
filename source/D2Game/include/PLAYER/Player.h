@@ -56,7 +56,7 @@ int32_t __fastcall D2GAME_IteratePlayers_6FC7C750(D2GameStrc* pGame, D2UnitStrc*
 //D2Game.0x6FC7C790
 void __fastcall sub_6FC7C790(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pArgs);
 //D2Game.0x6FC7C7B0
-D2UnitStrc* __fastcall sub_6FC7C7B0(D2UnitStrc* pUnit);
+D2UnitStrc* __fastcall PLAYER_GetActiveWeapon(D2UnitStrc* pUnit);
 //D2Game.0x6FC7C900
 void __fastcall sub_6FC7C900(D2UnitStrc* pAttacker, int32_t a2);
 //D2Game.0x6FC7CA10

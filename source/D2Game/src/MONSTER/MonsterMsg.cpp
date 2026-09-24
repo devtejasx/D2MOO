@@ -50,13 +50,13 @@ void __fastcall sub_6FC659E0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2ClientStrc*
         pUnit->dwFlags &= ~UNITFLAG_MONMODEISCHANGING;
     }
 
-    sub_6FCC6540(pUnit, pClient);
+    SUNIT_SendQueuedMsgs(pUnit, pClient);
 
     if (pUnit)
     {
         if (pUnit->dwFlags & UNITFLAG_HASTXTMSG)
         {
-            sub_6FCC5FA0(pUnit, pClient);
+            SUNIT_SendHoverText(pUnit, pClient);
         }
 
         if (pUnit->dwFlagEx & UNITFLAGEX_HASINV)
@@ -102,7 +102,7 @@ void __fastcall sub_6FC659E0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2ClientStrc*
 
     if (D2COMMON_10530_D2CheckStatlistFlagDMGRed(pUnit))
     {
-        sub_6FCC5F20(pUnit, pClient);
+        SUNIT_SendItemOverlay(pUnit, pClient);
     }
 
     if (pUnit && pUnit->dwFlags & UNITFLAG_SUMMONER && MONSTER_CheckSummonerFlag(pUnit, 1u))

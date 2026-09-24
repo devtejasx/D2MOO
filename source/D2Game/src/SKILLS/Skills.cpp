@@ -645,7 +645,7 @@ void __fastcall sub_6FD0FE50(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t (__fa
 }
 
 //D2Game.0x6FD0FE80
-void __fastcall sub_6FD0FE80(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nX, int32_t nY, int32_t nAuraRange, uint32_t nAuraFilter, int32_t(__fastcall* pCallback)(D2AuraCallbackStrc*, D2UnitStrc*), void* pCallbackArgs, int32_t bCheckMonAuraFlag, const char* szFile, int32_t nLine)
+void __fastcall SKILLS_IterateUnitsInAuraRange(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nX, int32_t nY, int32_t nAuraRange, uint32_t nAuraFilter, int32_t(__fastcall* pCallback)(D2AuraCallbackStrc*, D2UnitStrc*), void* pCallbackArgs, int32_t bCheckMonAuraFlag, const char* szFile, int32_t nLine)
 {
     if (!pGame || !pUnit || !pCallback || nAuraRange <= 0)
     {
@@ -792,7 +792,7 @@ int32_t __fastcall sub_6FD10200(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nX
 
     if (pUnit)
     {
-        sub_6FD0FE80(pGame, pUnit, nX, nY, nAuraRange, nAuraFilter, sub_6FCF5DE0, pDamage, 0, __FILE__, __LINE__);
+        SKILLS_IterateUnitsInAuraRange(pGame, pUnit, nX, nY, nAuraRange, nAuraFilter, sub_6FCF5DE0, pDamage, 0, __FILE__, __LINE__);
     }
 
     return 1;
@@ -901,7 +901,7 @@ D2UnitStrc* __fastcall SKILLS_FindAuraTarget(D2GameStrc* pGame, D2UnitStrc* pUni
     arg.nY = CLIENTS_GetUnitY(pUnit);
     arg.pCallback = pCallback;
 
-    sub_6FD0FE80(pGame, pUnit, 0, 0, nAuraRange, 0x8783u, sub_6FD106F0, &arg, 0, __FILE__, __LINE__);
+    SKILLS_IterateUnitsInAuraRange(pGame, pUnit, 0, 0, nAuraRange, 0x8783u, sub_6FD106F0, &arg, 0, __FILE__, __LINE__);
 
     return arg.pUnit;
 }
@@ -934,7 +934,7 @@ int32_t __fastcall sub_6FD10790(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nX
 {
     int32_t nSkillId = 0;
 
-    sub_6FD0FE80(pGame, pUnit, nX, nY, nAuraRange, nAuraFilter | 0xA783, sub_6FD107E0, &nSkillId, 0, __FILE__, __LINE__);
+    SKILLS_IterateUnitsInAuraRange(pGame, pUnit, nX, nY, nAuraRange, nAuraFilter | 0xA783, sub_6FD107E0, &nSkillId, 0, __FILE__, __LINE__);
 
     return nSkillId;
 }
@@ -947,7 +947,7 @@ int32_t __fastcall sub_6FD107E0(D2AuraCallbackStrc* pAuraCallback, D2UnitStrc* p
 }
 
 //D2Game.0x6FD107F0
-D2UnitStrc* __fastcall sub_6FD107F0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nX, int32_t nY, int32_t nAuraRange, uint32_t nAuraFilter, int32_t a7, int32_t* a8)
+D2UnitStrc* __fastcall SKILLS_FindTargetInAuraRange(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nX, int32_t nY, int32_t nAuraRange, uint32_t nAuraFilter, int32_t a7, int32_t* a8)
 {
     // TODO: Names
     D2_6FD10880_Strc args = {};
@@ -958,7 +958,7 @@ D2UnitStrc* __fastcall sub_6FD107F0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_
     args.unk0x04 = -1;
     args.unk0x08 = 0;
     args.unk0x14 = 0;
-    sub_6FD0FE80(pGame, pUnit, nX, nY, nAuraRange, nAuraFilter | 0xA783, sub_6FD10880, &args, 0, __FILE__, __LINE__);
+    SKILLS_IterateUnitsInAuraRange(pGame, pUnit, nX, nY, nAuraRange, nAuraFilter | 0xA783, SKILLS_AuraCallback_FindNearestGUID, &args, 0, __FILE__, __LINE__);
 
     if (!args.unk0x00)
     {
@@ -974,7 +974,7 @@ D2UnitStrc* __fastcall sub_6FD107F0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_
 }
 
 //D2Game.0x6FD10880
-int32_t __fastcall sub_6FD10880(D2AuraCallbackStrc* pAuraCallback, D2UnitStrc* pUnit)
+int32_t __fastcall SKILLS_AuraCallback_FindNearestGUID(D2AuraCallbackStrc* pAuraCallback, D2UnitStrc* pUnit)
 {
     D2_6FD10880_Strc* pArgs = (D2_6FD10880_Strc*)pAuraCallback->pArgs;
 
@@ -1617,7 +1617,7 @@ int32_t __fastcall sub_6FD118C0(D2GameStrc* pGame, D2UnitStrc* pUnit)
         return 0;
     }
 
-    D2UnitStrc* pWeapon = sub_6FC7C7B0(pUnit);
+    D2UnitStrc* pWeapon = PLAYER_GetActiveWeapon(pUnit);
     int32_t bNoBow = 1;
 
     if (ITEMS_CheckItemTypeId(pWeapon, ITEMTYPE_BOW) || ITEMS_CheckItemTypeId(pWeapon, ITEMTYPE_CROSSBOW))
@@ -1653,7 +1653,7 @@ int32_t __fastcall sub_6FD119C0(D2UnitStrc* pUnit)
         return 1;
     }
 
-    D2UnitStrc* pWeapon = sub_6FC7C7B0(pUnit);
+    D2UnitStrc* pWeapon = PLAYER_GetActiveWeapon(pUnit);
     if (!pWeapon)
     {
         return 0;
@@ -2029,7 +2029,7 @@ int32_t __fastcall SKILLS_SrvDo001_Attack_LeftHandSwing(D2GameStrc* pGame, D2Uni
         pUnit->dwFlags |= UNITFLAG_SKSRVDOFUNC;
     }
 
-    D2UnitStrc* pWeapon = sub_6FC7C7B0(pUnit);
+    D2UnitStrc* pWeapon = PLAYER_GetActiveWeapon(pUnit);
     if (pWeapon && ITEMS_GetItemType(pWeapon) == ITEMTYPE_MISSILE_POTION)
     {
         return 0;

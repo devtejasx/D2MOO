@@ -822,7 +822,7 @@ void __fastcall sub_6FC7C790(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pArgs)
 }
 
 //D2Game.0x6FC7C7B0
-D2UnitStrc* __fastcall sub_6FC7C7B0(D2UnitStrc* pUnit)
+D2UnitStrc* __fastcall PLAYER_GetActiveWeapon(D2UnitStrc* pUnit)
 {
     if (!pUnit || !pUnit->pInventory)
     {
@@ -923,7 +923,7 @@ void __fastcall sub_6FC7C900(D2UnitStrc* pAttacker, int32_t a2)
 
     if (UNITS_CanDualWield(pAttacker))
     {
-        D2UnitStrc* pWeapon = sub_6FC7C7B0(pAttacker);
+        D2UnitStrc* pWeapon = PLAYER_GetActiveWeapon(pAttacker);
         D2UnitStrc* pLeftHandWeapon = INVENTORY_GetLeftHandWeapon(pAttacker->pInventory);
         if (pWeapon)
         {

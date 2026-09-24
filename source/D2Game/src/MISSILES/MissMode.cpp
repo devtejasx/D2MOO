@@ -2480,7 +2480,7 @@ int32_t __fastcall MISSMODE_SrvHit10_GuidedArrow_BoneSpirit(D2GameStrc* pGame, D
         return 1;
     }
 
-    D2UnitStrc* pTarget = sub_6FD107F0(pGame, pOwner, CLIENTS_GetUnitX(pMissile), CLIENTS_GetUnitY(pMissile), pMissilesTxtRecord->dwParam[1], 3, -1, 0);
+    D2UnitStrc* pTarget = SKILLS_FindTargetInAuraRange(pGame, pOwner, CLIENTS_GetUnitX(pMissile), CLIENTS_GetUnitY(pMissile), pMissilesTxtRecord->dwParam[1], 3, -1, 0);
     if (pTarget && SUNIT_IsDead(pTarget))
     {
         pTarget = nullptr;
@@ -2561,7 +2561,7 @@ int32_t __fastcall MISSMODE_SrvHit12_ChainLightning_LightningStrike(D2GameStrc* 
         nRange = std::max(SKILLS_EvaluateSkillFormula(pOwner, pSkillsTxtRecord->dwAuraRangeCalc, nSkillId, nLevel), 1);
     }
 
-    D2UnitStrc* pTarget = sub_6FD107F0(pGame, pOwner, nX, nY, nRange, 0x88583u, pUnit->dwUnitId, 0);
+    D2UnitStrc* pTarget = SKILLS_FindTargetInAuraRange(pGame, pOwner, nX, nY, nRange, 0x88583u, pUnit->dwUnitId, 0);
     if (pTarget && pTarget != pUnit)
     {
         D2MissileStrc missileParams = {};
@@ -3107,7 +3107,7 @@ int32_t __fastcall MISSMODE_SrvHit20_LightningFury(D2GameStrc* pGame, D2UnitStrc
     params.nParam = nParam;
     params.nHitSubMissile = pMissilesTxtRecord->wHitSubMissile[0];
 
-    sub_6FD0FE80(pGame, pOwner, CLIENTS_GetUnitX(pMissile), CLIENTS_GetUnitY(pMissile), nAuraRange, nAuraFilter, MISSMODE_LightningFury_AuraCallback, &params, 1, __FILE__, __LINE__);
+    SKILLS_IterateUnitsInAuraRange(pGame, pOwner, CLIENTS_GetUnitX(pMissile), CLIENTS_GetUnitY(pMissile), nAuraRange, nAuraFilter, MISSMODE_LightningFury_AuraCallback, &params, 1, __FILE__, __LINE__);
     return 3;
 }
 
@@ -3255,7 +3255,7 @@ int32_t __fastcall MISSMODE_SrvHit22_FistOfTheHeavensDelay(D2GameStrc* pGame, D2
     params.nLevel = nLevel;
     params.nParam = nParam;
     params.nHitSubMissile = pMissilesTxtRecord->wHitSubMissile[0];
-    sub_6FD0FE80(pGame, pOwner, CLIENTS_GetUnitX(pMissile), CLIENTS_GetUnitY(pMissile), nAuraRange, nAuraFilter, MISSMODE_FistOfTheHeavensDelay_AuraCallback, &params, 0, __FILE__, __LINE__);
+    SKILLS_IterateUnitsInAuraRange(pGame, pOwner, CLIENTS_GetUnitX(pMissile), CLIENTS_GetUnitY(pMissile), nAuraRange, nAuraFilter, MISSMODE_FistOfTheHeavensDelay_AuraCallback, &params, 0, __FILE__, __LINE__);
     return 1;
 }
 

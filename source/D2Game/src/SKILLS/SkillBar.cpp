@@ -321,7 +321,7 @@ int32_t __fastcall SKILLS_SrvDo070_DoubleSwing(D2GameStrc* pGame, D2UnitStrc* pU
     {
         pUnit->dwFlags |= UNITFLAG_SKSRVDOFUNC;
 
-        pTarget = sub_6FD107F0(pGame, pUnit, 0, 0, sub_6FD15460(pUnit), 0x20003u, pTarget->dwUnitId, 0);
+        pTarget = SKILLS_FindTargetInAuraRange(pGame, pUnit, 0, 0, sub_6FD15460(pUnit), 0x20003u, pTarget->dwUnitId, 0);
         if (!pTarget)
         {
             return 0;
@@ -496,7 +496,7 @@ int32_t __fastcall SKILLS_SrvDo074_DoubleThrow(D2GameStrc* pGame, D2UnitStrc* pU
         return 0;
     }
 
-    D2UnitStrc* pItem = sub_6FC7C7B0(pUnit);
+    D2UnitStrc* pItem = PLAYER_GetActiveWeapon(pUnit);
     if (!pItem)
     {
         return 0;
@@ -729,7 +729,7 @@ int32_t __fastcall SKILLS_SrvDo009_Frenzy(D2GameStrc* pGame, D2UnitStrc* pUnit, 
     sub_6FC80A30(pGame, pUnit);
     sub_6FC80E10(pGame, pUnit);
     SKILLS_ApplyFrenzyStats(pGame, pUnit, nSkillId, nSkillLevel);
-    return SKILLS_RollFrenzyDamage(pGame, pUnit, sub_6FD107F0(pGame, pUnit, 0, 0, sub_6FD15460(pUnit), 0x20003u, pTarget->dwUnitId, 0), nSkillId, nSkillLevel);
+    return SKILLS_RollFrenzyDamage(pGame, pUnit, SKILLS_FindTargetInAuraRange(pGame, pUnit, 0, 0, sub_6FD15460(pUnit), 0x20003u, pTarget->dwUnitId, 0), nSkillId, nSkillLevel);
 }
 
 //D2Game.0x6FCFBF80
@@ -760,7 +760,7 @@ int32_t __fastcall SKILLS_SrvSt38_Whirlwind(D2GameStrc* pGame, D2UnitStrc* pUnit
     D2SkillStrc* pSkill = SKILLS_GetHighestLevelSkillFromUnitAndId(pUnit, nSkillId);
     if (!pSkill)
     {
-        sub_6FCC63D0(pUnit, nSkillId);
+        SUNIT_QueueMsg_SkillEnd(pUnit, nSkillId);
         return 0;
     }
 
@@ -768,14 +768,14 @@ int32_t __fastcall SKILLS_SrvSt38_Whirlwind(D2GameStrc* pGame, D2UnitStrc* pUnit
     int32_t nY = 0;
     if (!D2GAME_GetXAndYFromTargetUnit_6FD14020(pGame, pUnit, &nX, &nY))
     {
-        sub_6FCC63D0(pUnit, nSkillId);
+        SUNIT_QueueMsg_SkillEnd(pUnit, nSkillId);
         return 0;
     }
 
     D2UnitStrc* pTarget = SUNIT_GetTargetUnit(pGame, pUnit);
     if (pTarget && UNITS_IsInMeleeRange(pUnit, pTarget, 0))
     {
-        sub_6FCC63D0(pUnit, nSkillId);
+        SUNIT_QueueMsg_SkillEnd(pUnit, nSkillId);
         return sub_6FD150A0(pGame, pUnit, pTarget);
     }
 
@@ -787,7 +787,7 @@ int32_t __fastcall SKILLS_SrvSt38_Whirlwind(D2GameStrc* pGame, D2UnitStrc* pUnit
 
     if (!pUnit->pDynamicPath)
     {
-        sub_6FCC63D0(pUnit, nSkillId);
+        SUNIT_QueueMsg_SkillEnd(pUnit, nSkillId);
         return 0;
     }
 
@@ -797,7 +797,7 @@ int32_t __fastcall SKILLS_SrvSt38_Whirlwind(D2GameStrc* pGame, D2UnitStrc* pUnit
 
     if (!D2Common_10142(pUnit->pDynamicPath, pUnit, 0))
     {
-        sub_6FCC63D0(pUnit, nSkillId);
+        SUNIT_QueueMsg_SkillEnd(pUnit, nSkillId);
         PATH_SetMoveTestCollisionMask(pUnit->pDynamicPath, a2);
         return 0;
     }
@@ -809,7 +809,7 @@ int32_t __fastcall SKILLS_SrvSt38_Whirlwind(D2GameStrc* pGame, D2UnitStrc* pUnit
     const int32_t nPathPoints = PATH_GetPathPoints(pUnit->pDynamicPath, &ppPathPoints);
     if (nPathPoints <= 0)
     {
-        sub_6FCC63D0(pUnit, nSkillId);
+        SUNIT_QueueMsg_SkillEnd(pUnit, nSkillId);
         PATH_SetMoveTestCollisionMask(pUnit->pDynamicPath, a2);
         return 0;
     }
@@ -817,7 +817,7 @@ int32_t __fastcall SKILLS_SrvSt38_Whirlwind(D2GameStrc* pGame, D2UnitStrc* pUnit
     nX = ppPathPoints[nPathPoints - 1].X;
     nY = ppPathPoints[nPathPoints - 1].Y;
     COLLISION_SetMaskWithPattern(UNITS_GetRoom(pUnit), nX, nY, PATH_GetUnitCollisionPattern(pUnit), nUnitType == UNIT_PLAYER ? 0x80u : 0x100u);
-    sub_6FCBDE90(pUnit, 1);
+    SUNIT_SetUninterruptable(pUnit, 1);
     STATES_ToggleState(pUnit, STATE_SKILL_MOVE, 1);
 
     SKILLS_SetFlags(pSkill, 1);
@@ -879,8 +879,8 @@ int32_t __fastcall SKILLS_RemoveWhirlwindStats(D2GameStrc* pGame, D2UnitStrc* pU
     // TODO: v9, pUnita
 
     SKILLS_SetFlags(pSkill, 0);
-    sub_6FCBDE90(pUnit, 0);
-    sub_6FCC63D0(pUnit, a4);
+    SUNIT_SetUninterruptable(pUnit, 0);
+    SUNIT_QueueMsg_SkillEnd(pUnit, a4);
 
     if (!pUnit->pDynamicPath)
     {
@@ -973,7 +973,7 @@ int32_t __fastcall SKILLS_SrvDo076_Whirlwind(D2GameStrc* pGame, D2UnitStrc* pUni
                 {
                     nCount = 1;
                     int32_t nDuration = 0;
-                    D2UnitStrc* pWeapon = sub_6FC7C7B0(pUnit);
+                    D2UnitStrc* pWeapon = PLAYER_GetActiveWeapon(pUnit);
                     if (pWeapon)
                     {
                         const int32_t nAttackSpeed = ITEMS_GetWeaponAttackSpeed(pUnit, pWeapon);
@@ -1048,7 +1048,7 @@ int32_t __fastcall SKILLS_SrvDo076_Whirlwind(D2GameStrc* pGame, D2UnitStrc* pUni
 
     for (int32_t i = 0; i < nCount; ++i)
     {
-        D2UnitStrc* pTarget = sub_6FD107F0(pGame, pUnit, 0, 0, 5, 3, SKILLS_GetParam3(pSkill), 0);
+        D2UnitStrc* pTarget = SKILLS_FindTargetInAuraRange(pGame, pUnit, 0, 0, 5, 3, SKILLS_GetParam3(pSkill), 0);
         if (pTarget)
         {
             SKILLS_SetParam3(pSkill, pTarget->dwUnitId);
@@ -1279,7 +1279,7 @@ int32_t __fastcall SKILLS_SrvSt40_Leap(D2GameStrc* pGame, D2UnitStrc* pUnit, int
     }
 
     COLLISION_SetMaskWithPattern(D2GAME_GetRoom_6FC52070(UNITS_GetRoom(pUnit), nX, nY), nX, nY, PATH_GetUnitCollisionPattern(pUnit), 0x80u);
-    sub_6FCBDE90(pUnit, 1);
+    SUNIT_SetUninterruptable(pUnit, 1);
     STATES_ToggleState(pUnit, STATE_SKILL_MOVE, 1);
     SKILLS_SetParam1(pSkill, nX);
     SKILLS_SetParam2(pSkill, nY);
@@ -1534,8 +1534,8 @@ int32_t __fastcall SKILLS_Leap(D2GameStrc* pGame, D2UnitStrc* pUnit, D2SkillStrc
             EVENT_SetEvent(pGame, pUnit, EVENTTYPE_ENDANIM, pGame->dwGameFrame + 1, 0, 0);
         }
 
-        sub_6FCBDE90(pUnit, 0);
-        sub_6FCC63D0(pUnit, SKILLS_GetSkillIdFromSkill(pSkill, __FILE__, __LINE__));
+        SUNIT_SetUninterruptable(pUnit, 0);
+        SUNIT_QueueMsg_SkillEnd(pUnit, SKILLS_GetSkillIdFromSkill(pSkill, __FILE__, __LINE__));
         return 1;
     }
 
@@ -1592,7 +1592,7 @@ int32_t __fastcall SKILLS_SrvSt41_LeapAttack(D2GameStrc* pGame, D2UnitStrc* pUni
 
     COLLISION_SetMaskWithPattern(pRoom, nX, nY, PATH_GetUnitCollisionPattern(pUnit), COLLIDE_PLAYER);
 
-    sub_6FCBDE90(pUnit, 1);
+    SUNIT_SetUninterruptable(pUnit, 1);
     SKILLS_SetParam1(pSkill, nX);
     SKILLS_SetParam2(pSkill, nY);
 
@@ -1748,7 +1748,7 @@ D2UnitStrc* __fastcall SKILLS_FindLeapAttackTarget(D2GameStrc* pGame, D2UnitStrc
         return pTarget;
     }
 
-    pTarget = sub_6FD107F0(pGame, pUnit, 0, 0, sub_6FD15460(pUnit), 0x20003u, -1, 0);
+    pTarget = SKILLS_FindTargetInAuraRange(pGame, pUnit, 0, 0, sub_6FD15460(pUnit), 0x20003u, -1, 0);
     if (!pTarget)
     {
         SKILLS_SetParam3(pSkill, 6);

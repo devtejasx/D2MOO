@@ -13781,7 +13781,7 @@ void __fastcall AITHINK_Fn102_BladeCreeper(D2GameStrc* pGame, D2UnitStrc* pUnit,
 				STATLIST_AddUnitStat(pUnit, STAT_TOHIT, UNITS_GetAttackRate(pOwner), 0);
 
 				int32_t nToHitPercent = STATLIST_UnitGetStatValue(pOwner, STAT_ITEM_TOHIT_PERCENT, 0);
-				D2UnitStrc* pWeapon = sub_6FC7C7B0(pOwner);
+				D2UnitStrc* pWeapon = PLAYER_GetActiveWeapon(pOwner);
 				if (pWeapon)
 				{
 					nToHitPercent += SKILLS_GetWeaponMasteryBonus(pOwner, pWeapon, 0, 0);
@@ -16727,15 +16727,15 @@ void __fastcall AITHINK_Fn134_BaalThrone(D2GameStrc* pGame, D2UnitStrc* pUnit, D
 			D2SuperUniquesTxt* pSuperUniquesTxtRecord = DATATBLS_GetSuperUniquesTxtRecord(nSuperUnique);
 			if (pSuperUniquesTxtRecord && pSuperUniquesTxtRecord->dwClass >= 0)
 			{
-				sub_6FCC6470(pUnit, pSuperUniquesTxtRecord->dwClass);
+				SUNIT_QueueMsg_MonsterClass(pUnit, pSuperUniquesTxtRecord->dwClass);
 
 				if (pSuperUniquesTxtRecord->dwClass == MONSTER_FALLENSHAMAN5)
 				{
-					sub_6FCC6470(pUnit, MONSTER_FALLEN5);
+					SUNIT_QueueMsg_MonsterClass(pUnit, MONSTER_FALLEN5);
 				}
 				else if (pSuperUniquesTxtRecord->dwClass == MONSTER_UNRAVELER5)
 				{
-					sub_6FCC6470(pUnit, MONSTER_SKMAGE_COLD3);
+					SUNIT_QueueMsg_MonsterClass(pUnit, MONSTER_SKMAGE_COLD3);
 				}
 			}
 		}

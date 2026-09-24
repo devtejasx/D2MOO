@@ -613,7 +613,7 @@ int32_t __fastcall SKILLS_SrvDo038_FistsOfFire_BladesOfIce_ProgressiveFn2(D2Game
     D2GAME_RollElementalDamage_6FD14DD0(pUnit, &damage, nSkillId, nSkillLevel);
     damage.wResultFlags |= 1u;
     damage.dwHitFlags |= 1;
-    sub_6FD0FE80(pGame, pUnit, nX, nY, nRange, pSkillsTxtRecord->dwAuraFilter, sub_6FCF5DE0, &damage, 0, __FILE__, __LINE__);
+    SKILLS_IterateUnitsInAuraRange(pGame, pUnit, nX, nY, nRange, pSkillsTxtRecord->dwAuraFilter, sub_6FCF5DE0, &damage, 0, __FILE__, __LINE__);
     return 1;
 }
 
@@ -1104,7 +1104,7 @@ void __fastcall sub_6FCF77E0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2DamageStrc*
                             }
                         }
 
-                        sub_6FCC6300(pUnit, pTarget, nSkillId, nSkillLevel, nX, 0, nValue);
+                        SUNIT_QueueMsg_SkillCast(pUnit, pTarget, nSkillId, nSkillLevel, nX, 0, nValue);
                     }
                 }
 
@@ -1713,7 +1713,7 @@ int32_t __fastcall SKILLS_SrvDo047_CloakOfShadows(D2GameStrc* pGame, D2UnitStrc*
         }
     }
 
-    sub_6FD0FE80(pGame, pUnit, 0, 0, SKILLS_EvaluateSkillFormula(pUnit, pSkillsTxtRecord->dwAuraRangeCalc, nSkillId, nSkillLevel), pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_CloakOfShadows, &args, 1, __FILE__, __LINE__);
+    SKILLS_IterateUnitsInAuraRange(pGame, pUnit, 0, 0, SKILLS_EvaluateSkillFormula(pUnit, pSkillsTxtRecord->dwAuraRangeCalc, nSkillId, nSkillLevel), pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_CloakOfShadows, &args, 1, __FILE__, __LINE__);
 
     return 1;
 }
@@ -2345,7 +2345,7 @@ int32_t __fastcall SKILLS_SrvDo051_MindBlast(D2GameStrc* pGame, D2UnitStrc* pUni
     args.nParam2 = pSkillsTxtRecord->dwParam[3];
 
 
-    sub_6FD0FE80(pGame, pUnit, nX, nY, nRange, pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_MindBlast, &args, 0, __FILE__, __LINE__);
+    SKILLS_IterateUnitsInAuraRange(pGame, pUnit, nX, nY, nRange, pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_MindBlast, &args, 0, __FILE__, __LINE__);
     return 1;
 }
 
@@ -2486,7 +2486,7 @@ int32_t __fastcall SKILLS_SrvDo053_Unused(D2GameStrc* pGame, D2UnitStrc* pUnit, 
         damage.dwHitClass = pSkillsTxtRecord->dwHitClass;
     }
 
-    sub_6FD0FE80(pGame, pUnit, 0, 0, nAuraRange, pSkillsTxtRecord->dwAuraFilter, sub_6FCF5DE0, &damage, 0, __FILE__, __LINE__);
+    SKILLS_IterateUnitsInAuraRange(pGame, pUnit, 0, 0, nAuraRange, pSkillsTxtRecord->dwAuraFilter, sub_6FCF5DE0, &damage, 0, __FILE__, __LINE__);
 	return 1;
 }
 
@@ -2548,7 +2548,7 @@ int32_t __fastcall SKILLS_SrvDo142_Unused(D2GameStrc* pGame, D2UnitStrc* pUnit, 
         args.nToHit = SKILLS_GetToHitFactor(pUnit, nSkillId, nSkillLevel);
     }
 
-    sub_6FD0FE80(pGame, pUnit, 0, 0, nRange, pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_SrvDo142, &args, 0, __FILE__, __LINE__);
+    SKILLS_IterateUnitsInAuraRange(pGame, pUnit, 0, 0, nRange, pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_SrvDo142, &args, 0, __FILE__, __LINE__);
     return 1;
 }
 

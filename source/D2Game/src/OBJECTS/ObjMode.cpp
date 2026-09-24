@@ -673,7 +673,7 @@ void __fastcall sub_6FC75350(D2GameStrc* pGame, D2UnitStrc* pUnit, D2ClientStrc*
 
         if ((pUnit->dwFlags >> 8) & 1)
         {
-            sub_6FCC5FA0(pUnit, pClient);
+            SUNIT_SendHoverText(pUnit, pClient);
         }
 
         if (pUnit->dwFlagEx & 1)
@@ -682,7 +682,7 @@ void __fastcall sub_6FC75350(D2GameStrc* pGame, D2UnitStrc* pUnit, D2ClientStrc*
         }
     }
 
-    sub_6FCC6540(pUnit, pClient);
+    SUNIT_SendQueuedMsgs(pUnit, pClient);
 }
 
 //D2Game.0x6FC753E0

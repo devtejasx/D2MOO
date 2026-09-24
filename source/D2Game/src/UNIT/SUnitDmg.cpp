@@ -153,7 +153,7 @@ int32_t __fastcall SUNITDMG_ApplyDamageBonuses(D2UnitStrc* pUnit, int32_t bGetSt
     {
         if (!pItem)
         {
-            pItem = sub_6FC7C7B0(pUnit);
+            pItem = PLAYER_GetActiveWeapon(pUnit);
         }
 
         if (pItem)
@@ -283,7 +283,7 @@ void __fastcall SUNITDMG_FillDamageValues(D2GameStrc* pGame, D2UnitStrc* pAttack
 		if (MONSTERS_IsUndead(pDefender))
 		{
 			int32_t nUndeadDamagePct = 0;
-			D2UnitStrc* pWeapon = sub_6FC7C7B0(pAttacker);
+			D2UnitStrc* pWeapon = PLAYER_GetActiveWeapon(pAttacker);
 			if (pWeapon && ITEMS_CheckItemTypeId(pWeapon, ITEMTYPE_BLUNT))
 			{
 				nUndeadDamagePct = 50;
@@ -321,7 +321,7 @@ void __fastcall SUNITDMG_FillDamageValues(D2GameStrc* pGame, D2UnitStrc* pAttack
 		int32_t nWeaponMastery = 0;
 
 		if (!a5 
-			&& (nWeaponMastery = SKILLS_GetWeaponMasteryBonus(pAttacker, sub_6FC7C7B0(pAttacker), 0, 2), nWeaponMastery > 0) // NOLINT(bugprone-assignment-in-if-condition)
+			&& (nWeaponMastery = SKILLS_GetWeaponMasteryBonus(pAttacker, PLAYER_GetActiveWeapon(pAttacker), 0, 2), nWeaponMastery > 0) // NOLINT(bugprone-assignment-in-if-condition)
 			&& (int32_t)(ITEMS_RollRandomNumber(&pAttacker->pSeed) % 100) < nWeaponMastery
 			)
 		{
@@ -2331,7 +2331,7 @@ void __fastcall SUNITDMG_DrainItemDurability(D2GameStrc* pGame, D2UnitStrc* pAtt
 
 		if (pAttacker->dwUnitType == UNIT_PLAYER)
 		{
-			D2UnitStrc* pItem = sub_6FC7C7B0(pAttacker);
+			D2UnitStrc* pItem = PLAYER_GetActiveWeapon(pAttacker);
 			if (pItem)
 			{
 				ITEMS_UpdateDurability(pGame, pAttacker, pItem);
@@ -2506,7 +2506,7 @@ int32_t __fastcall SUNITDMG_IsHitSuccessful(D2UnitStrc* pAttacker, D2UnitStrc* p
 
 		if (!bMissile)
 		{
-			D2UnitStrc* pWeapon = sub_6FC7C7B0(pAttacker);
+			D2UnitStrc* pWeapon = PLAYER_GetActiveWeapon(pAttacker);
 			if (pWeapon)
 			{
 				nToHitPercent = SKILLS_GetWeaponMasteryBonus(pAttacker, pWeapon, 0, 0);

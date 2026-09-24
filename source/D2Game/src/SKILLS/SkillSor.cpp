@@ -430,7 +430,7 @@ int32_t __fastcall SKILLS_SrvDo020_StaticField(D2GameStrc* pGame, D2UnitStrc* pU
 	staticField.nElementalType = pSkillsTxtRecord->nEType;
 
     const int32_t nAuraRange = SKILLS_EvaluateSkillFormula(pUnit, pSkillsTxtRecord->dwAuraRangeCalc, nSkillId, nSkillLevel);
-	sub_6FD0FE80(pGame, pUnit, 0, 0, nAuraRange, pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_StaticField, &staticField, 0, __FILE__, __LINE__);
+	SKILLS_IterateUnitsInAuraRange(pGame, pUnit, 0, 0, nAuraRange, pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_StaticField, &staticField, 0, __FILE__, __LINE__);
 	return 1;
 }
 
@@ -950,7 +950,7 @@ int32_t __fastcall SKILLS_SrvDo029_ThunderStorm(D2GameStrc* pGame, D2UnitStrc* p
     }
     else
     {
-        D2UnitStrc* pTarget = sub_6FD107F0(pGame, pUnit, 0, 0, pSkillsTxtRecord->dwParam[6], 3, SKILLS_GetParam1(pSkill), 0);
+        D2UnitStrc* pTarget = SKILLS_FindTargetInAuraRange(pGame, pUnit, 0, 0, pSkillsTxtRecord->dwParam[6], 3, SKILLS_GetParam1(pSkill), 0);
         if (pTarget)
         {
             if (pUnit && !DUNGEON_IsRoomInTown(UNITS_GetRoom(pUnit)) && !DUNGEON_IsRoomInTown(UNITS_GetRoom(pTarget)))
@@ -960,7 +960,7 @@ int32_t __fastcall SKILLS_SrvDo029_ThunderStorm(D2GameStrc* pGame, D2UnitStrc* p
                 {
                     MISSMODE_SrvDmgHitHandler(pGame, pMissile, pTarget, 1);
                     SUNIT_RemoveUnit(pGame, pMissile);
-                    sub_6FCC6300(pUnit, pTarget, nSkillId, nSkillLevel, 0, 0, 0);
+                    SUNIT_QueueMsg_SkillCast(pUnit, pTarget, nSkillId, nSkillLevel, 0, 0, 0);
                 }
             }
 

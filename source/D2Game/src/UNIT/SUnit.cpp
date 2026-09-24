@@ -2243,7 +2243,7 @@ void __fastcall sub_6FCBDD30(D2UnitStrc* pUnit, uint8_t nAlignNew, int32_t a3)
 }
 
 //D2Game.0x6FCBDE90
-void __fastcall sub_6FCBDE90(D2UnitStrc* pUnit, int32_t bSetUninterruptable)
+void __fastcall SUNIT_SetUninterruptable(D2UnitStrc* pUnit, int32_t bSetUninterruptable)
 {
     STATES_ToggleState(pUnit, STATE_UNINTERRUPTABLE, bSetUninterruptable);
 

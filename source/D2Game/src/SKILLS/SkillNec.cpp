@@ -1364,7 +1364,7 @@ int32_t __fastcall SKILLS_SrvDo055_CorpseExplosion(D2GameStrc* pGame, D2UnitStrc
     args.nY = nY;
     args.unk0x0C = nHalfRange * nHalfRange;
 
-    sub_6FD0FE80(pGame, pUnit, nX, nY, nRange, pSkillsTxtRecord->dwAuraFilter, sub_6FD0D000, &args, 0, __FILE__, __LINE__);
+    SKILLS_IterateUnitsInAuraRange(pGame, pUnit, nX, nY, nRange, pSkillsTxtRecord->dwAuraFilter, sub_6FD0D000, &args, 0, __FILE__, __LINE__);
 
     return 1;
 }

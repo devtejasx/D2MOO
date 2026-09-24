@@ -949,7 +949,7 @@ int32_t __fastcall SKILLS_SrvDo123_Volcano(D2GameStrc* pGame, D2UnitStrc* pUnit,
     }
 
     MISSILE_SetTargetX(pMissile, nRand);
-    sub_6FCC6300(pUnit, 0, nSkillId, nSkillLevel, nTargetX, nTargetY, nRand);
+    SUNIT_QueueMsg_SkillCast(pUnit, 0, nSkillId, nSkillLevel, nTargetX, nTargetY, nRand);
     return 1;
 }
 
@@ -1141,7 +1141,7 @@ int32_t __fastcall SKILLS_SrvDo146_Unused(D2GameStrc* pGame, D2UnitStrc* pUnit, 
             if (pTargetRoom && !COLLISION_CheckMask(pTargetRoom, nX, nY, 1u))
             {
                 D2GAME_CreateMissile_6FD115E0(pGame, pUnit, nSkillId, nSkillLevel, nMissileId, nX, nY);
-                sub_6FCC6300(pUnit, 0, nSkillId, nSkillLevel, nX, nY, 0);
+                SUNIT_QueueMsg_SkillCast(pUnit, 0, nSkillId, nSkillLevel, nX, nY, 0);
                 return 1;
             }
         }
@@ -2273,7 +2273,7 @@ int32_t __fastcall SKILLS_SrvSt63_Corpse_VineCycler(D2GameStrc* pGame, D2UnitStr
     missileParams.nSkill = nSkillId;
     missileParams.nSkillLevel = nSkillLevel;
     MISSILES_CreateMissileFromParams(pGame, &missileParams);
-    sub_6FCC6300(pUnit, pTarget, nSkillId, 1, 0, 0, 0);
+    SUNIT_QueueMsg_SkillCast(pUnit, pTarget, nSkillId, 1, 0, 0, 0);
     return 1;
 }
 

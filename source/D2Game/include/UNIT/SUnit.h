@@ -139,7 +139,7 @@ int32_t __fastcall SUNIT_AreUnitsAligned(D2GameStrc* pGame, D2UnitStrc* pUnit1, 
 //D2Game.0x6FCBDD30
 void __fastcall sub_6FCBDD30(D2UnitStrc* pUnit, uint8_t nAlignNew, int32_t a3);
 //D2Game.0x6FCBDE90
-void __fastcall sub_6FCBDE90(D2UnitStrc* pUnit, int32_t bSetUninterruptable);
+void __fastcall SUNIT_SetUninterruptable(D2UnitStrc* pUnit, int32_t bSetUninterruptable);
 //D2Game.0x6FCBDF90
 int32_t __fastcall sub_6FCBDF90(D2GameStrc* pGame, D2UnitStrc* pPlayer, int32_t a3, int32_t a4, int32_t a5);
 //D2Game.0x6FCBDFE0

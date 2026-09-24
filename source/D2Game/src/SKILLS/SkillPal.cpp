@@ -285,7 +285,7 @@ int32_t __fastcall SKILLS_SrvDo065_BasicAura(D2GameStrc* pGame, D2UnitStrc* pUni
 
         const int32_t nAuraRange = SKILLS_EvaluateSkillFormula(pUnit, pSkillsTxtRecord->dwAuraRangeCalc, nSkillId, nSkillLevel);
 
-        sub_6FD0FE80(pGame, pUnit, 0, 0, nAuraRange, pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_BasicAura, &args, 1, __FILE__, __LINE__);
+        SKILLS_IterateUnitsInAuraRange(pGame, pUnit, 0, 0, nAuraRange, pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_BasicAura, &args, 1, __FILE__, __LINE__);
 
         if (nManaCost > 0)
         {
@@ -553,7 +553,7 @@ int32_t __fastcall SKILLS_SrvDo066_HolyFire_HolyShock_Sanctuary_Conviction(D2Gam
 
     const int32_t nAuraRange = SKILLS_EvaluateSkillFormula(pUnit, pSkillsTxtRecord->dwAuraRangeCalc, nSkillId, nSkillLevel);
 
-    sub_6FD0FE80(pGame, pUnit, 0, 0, nAuraRange, pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_HolyFire_HolyShock_Sanctuary_Conviction, &args2, 0, __FILE__, __LINE__);
+    SKILLS_IterateUnitsInAuraRange(pGame, pUnit, 0, 0, nAuraRange, pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_HolyFire_HolyShock_Sanctuary_Conviction, &args2, 0, __FILE__, __LINE__);
 
     if (nManaCost > 0 && pUnit && !pUnit->dwUnitType)
     {
@@ -757,7 +757,7 @@ int32_t __fastcall SKILLS_SrvDo067_Charge(D2GameStrc* pGame, D2UnitStrc* pUnit, 
         SKILLS_SetFlags(pSkill, 0);
         SKILLS_SetParam1(pSkill, 0);
         SKILLS_SetParam2(pSkill, 0);
-        sub_6FCC63D0(pUnit, nSkillId);
+        SUNIT_QueueMsg_SkillEnd(pUnit, nSkillId);
         D2GAME_SKILLS_RewindSkillEx_6FCBD260(pGame, pUnit, nEventFrame);
 
         if (pUnit)
@@ -767,7 +767,7 @@ int32_t __fastcall SKILLS_SrvDo067_Charge(D2GameStrc* pGame, D2UnitStrc* pUnit, 
 
         if (!pTarget)
         {
-            pTarget = sub_6FD107F0(pGame, pUnit, 0, 0, 3, 3, -1, 0);
+            pTarget = SKILLS_FindTargetInAuraRange(pGame, pUnit, 0, 0, 3, 3, -1, 0);
             if (!pTarget)
             {
                 D2GAME_EVENTS_Delete_6FC34840(pGame, pUnit, EVENTTYPE_ENDANIM, 0);
@@ -843,16 +843,16 @@ int32_t __fastcall SKILLS_SrvDo067_Charge(D2GameStrc* pGame, D2UnitStrc* pUnit, 
     {
         SKILLS_SetFlags(pSkill, 0);
         D2GAME_SKILLS_RewindSkillEx_6FCBD260(pGame, pUnit, nEventFrame + 1);
-        sub_6FCC63D0(pUnit, nSkillId);
+        SUNIT_QueueMsg_SkillEnd(pUnit, nSkillId);
         return 1;
     }
 
     if (nSkillFlags & 2)
     {
         SKILLS_SetFlags(pSkill, 0);
-        sub_6FCC63D0(pUnit, nSkillId);
+        SUNIT_QueueMsg_SkillEnd(pUnit, nSkillId);
 
-        D2UnitStrc* pNewTarget = sub_6FD107F0(pGame, pUnit, 0, 0, 3, 3, nUnitGUID, 0);
+        D2UnitStrc* pNewTarget = SKILLS_FindTargetInAuraRange(pGame, pUnit, 0, 0, 3, 3, nUnitGUID, 0);
         if (pNewTarget && UNITS_IsInMeleeRange(pUnit, pNewTarget, 0))
         {
             SKILLS_SetParam1(pSkill, pNewTarget->dwUnitType);
@@ -943,7 +943,7 @@ int32_t __fastcall SKILLS_SrvSt35_Vengeance(D2GameStrc* pGame, D2UnitStrc* pUnit
 
         int32_t nShiftedMinDamage = 0;
         int32_t nShiftedMaxDamage = 0;
-        if (sub_6FC7C7B0(pUnit))
+        if (PLAYER_GetActiveWeapon(pUnit))
         {
             if (INVENTORY_GetWieldType(pUnit, pUnit->pInventory) == 2)
             {
@@ -1375,7 +1375,7 @@ int32_t __fastcall SKILLS_SrvDo081_HolyFreeze(D2GameStrc* pGame, D2UnitStrc* pUn
     
     const int32_t nAuraRange = SKILLS_EvaluateSkillFormula(pUnit, pSkillsTxtRecord->dwAuraRangeCalc, nSkillId, nSkillLevel);
     
-    sub_6FD0FE80(pGame, pUnit, 0, 0, nAuraRange, pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_HolyFreeze, &args2, 0, __FILE__, __LINE__);
+    SKILLS_IterateUnitsInAuraRange(pGame, pUnit, 0, 0, nAuraRange, pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_HolyFreeze, &args2, 0, __FILE__, __LINE__);
 
     if (nManaCost > 0 && pUnit && pUnit->dwUnitType == UNIT_PLAYER)
     {
@@ -1519,7 +1519,7 @@ int32_t __fastcall SKILLS_SrvDo082_Redemption(D2GameStrc* pGame, D2UnitStrc* pUn
     
     const int32_t nAuraRange = SKILLS_EvaluateSkillFormula(pUnit, pSkillsTxtRecord->dwAuraRangeCalc, nSkillId, nSkillLevel);
 
-    sub_6FD0FE80(pGame, pUnit, 0, 0, nAuraRange, pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_Redemption, &args2, 1, __FILE__, __LINE__);
+    SKILLS_IterateUnitsInAuraRange(pGame, pUnit, 0, 0, nAuraRange, pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_Redemption, &args2, 1, __FILE__, __LINE__);
 
     if (nManaCost > 0 && pUnit && pUnit->dwUnitType == UNIT_PLAYER)
     {

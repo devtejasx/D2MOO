@@ -304,7 +304,7 @@ int32_t __fastcall SKILLITEM_pSpell03_Potion(D2GameStrc* pGame, D2UnitStrc* pUni
         const int32_t nHpPctDiff = std::abs(nLastSentHpPct - nNewSentHpPct);
         if (nHpPctDiff > 4)
         {
-            sub_6FCC6270(pUnit, nNewSentHpPct);
+            SUNIT_QueueMsg_LifePercent(pUnit, nNewSentHpPct);
             STATLIST_SetUnitStat(pUnit, STAT_LAST_SENT_HP_PCT, nNewSentHpPct, 0);
         }
     }
@@ -449,7 +449,7 @@ int32_t __fastcall SKILLITEM_pSpell04_Unused(D2GameStrc* pGame, D2UnitStrc* pUni
         const int32_t nHpPctDiff = std::abs(nLastSentHpPct - nNewSentHpPct);
         if (nHpPctDiff > 4)
         {
-            sub_6FCC6270(pUnit, nNewSentHpPct);
+            SUNIT_QueueMsg_LifePercent(pUnit, nNewSentHpPct);
             STATLIST_SetUnitStat(pUnit, STAT_LAST_SENT_HP_PCT, nNewSentHpPct, 0);
         }
     }
@@ -581,7 +581,7 @@ int32_t __fastcall SKILLITEM_pSpell05_RejuvPotion(D2GameStrc* pGame, D2UnitStrc*
     if (bAffectsHitpoints && pUnit && pUnit->dwUnitType == UNIT_PLAYER)
     {
         const uint8_t nNewSentHpPct = sub_6FC62F50(pUnit);
-        sub_6FCC6270(pUnit, nNewSentHpPct);
+        SUNIT_QueueMsg_LifePercent(pUnit, nNewSentHpPct);
         STATLIST_SetUnitStat(pUnit, STAT_LAST_SENT_HP_PCT, nNewSentHpPct, 0);
     }
 
@@ -2066,11 +2066,11 @@ int32_t __fastcall SKILLITEM_CastSkillOnTarget(D2UnitStrc* pUnit, int32_t nSkill
 
     if (nTargetUnitType == 6)
     {
-        sub_6FCC60D0(pUnit, nSkillId, nSkillLevel, pTargetUnit->dwUnitType, pTargetUnit->dwUnitId, a5);
+        SUNIT_QueueMsg_SkillOnUnit(pUnit, nSkillId, nSkillLevel, pTargetUnit->dwUnitType, pTargetUnit->dwUnitId, a5);
     }
     else
     {
-        sub_6FCC60D0(pUnit, nSkillId, nSkillLevel, nTargetUnitType, nTargetUnitGUID, a5);
+        SUNIT_QueueMsg_SkillOnUnit(pUnit, nSkillId, nSkillLevel, nTargetUnitType, nTargetUnitGUID, a5);
     }
 
     return 1;
@@ -2096,11 +2096,11 @@ int32_t __fastcall SKILLITEM_CastSkillOnPosition(D2UnitStrc* pUnit, int32_t nSki
 
     if (nTargetX)
     {
-        sub_6FCC6150(pUnit, nSkillId, nSkillLevel, nTargetX, nTargetY, a0);
+        SUNIT_QueueMsg_SkillOnCoords(pUnit, nSkillId, nSkillLevel, nTargetX, nTargetY, a0);
     }
     else
     {
-        sub_6FCC6150(pUnit, nSkillId, nSkillLevel, nX, nY, a0);
+        SUNIT_QueueMsg_SkillOnCoords(pUnit, nSkillId, nSkillLevel, nX, nY, a0);
     }
 
     return 1;

@@ -152,7 +152,7 @@ int32_t __fastcall SKILLS_SrvSt07_Impale(D2GameStrc* pGame, D2UnitStrc* pUnit, i
 
         damage.dwHitFlags = DAMAGEHITFLAG_1;
 
-        D2UnitStrc* pItem = sub_6FC7C7B0(pUnit);
+        D2UnitStrc* pItem = PLAYER_GetActiveWeapon(pUnit);
         if (pItem && ITEMS_HasDurability(pItem))
         {
             const int32_t nChance = SKILLS_EvaluateSkillFormula(pUnit, pSkillsTxtRecord->dwCalc[1], nSkillId, nSkillLevel);
@@ -220,7 +220,7 @@ int32_t __fastcall SKILLS_SrvSt08_Strafe(D2GameStrc* pGame, D2UnitStrc* pUnit, i
     }
     else
     {
-        pTarget = sub_6FD107F0(pGame, pUnit, 0, 0, nAuraRange, 3, -1, &v13);
+        pTarget = SKILLS_FindTargetInAuraRange(pGame, pUnit, 0, 0, nAuraRange, 3, -1, &v13);
     }
 
     int32_t v12 = SKILLS_EvaluateSkillFormula(pUnit, pSkillsTxtRecord->dwCalc[2], nSkillId, nSkillLevel);
@@ -280,7 +280,7 @@ int32_t __fastcall SKILLS_SrvSt09_Fend(D2GameStrc* pGame, D2UnitStrc* pUnit, int
     }
     else
     {
-        pTarget = sub_6FD107F0(pGame, pUnit, 0, 0, nAuraRange, 0x20003, -1, &v11);
+        pTarget = SKILLS_FindTargetInAuraRange(pGame, pUnit, 0, 0, nAuraRange, 0x20003, -1, &v11);
         if (!pTarget)
         {
             SKILLS_SetParam1(pSkill, 0);
@@ -319,7 +319,7 @@ int32_t __fastcall SKILLS_SrvSt37_Zeal_Fury_BloodLordFrenzy(D2GameStrc* pGame, D
     D2UnitStrc* pTarget = SUNIT_GetTargetUnit(pGame, pUnit);
     if (!pTarget)
     {
-        pTarget = sub_6FD107F0(pGame, pUnit, 0, 0, nAuraRange, 0x20003, -1, 0);
+        pTarget = SKILLS_FindTargetInAuraRange(pGame, pUnit, 0, 0, nAuraRange, 0x20003, -1, 0);
     }
 
     if (!pTarget)
@@ -398,7 +398,7 @@ int32_t __fastcall SKILLS_SrvDo006_InnerSight_SlowMissiles(D2GameStrc* pGame, D2
     args.nAuraStatId = pSkillsTxtRecord->wAuraStat[0];
     args.nAuraStatCalcValue = SKILLS_EvaluateSkillFormula(pUnit, pSkillsTxtRecord->dwAuraStatCalc[0], nSkillId, nSkillLevel);
 
-    sub_6FD0FE80(pGame, pUnit, 0, 0, SKILLS_EvaluateSkillFormula(pUnit, pSkillsTxtRecord->dwAuraRangeCalc, nSkillId, nSkillLevel), pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_InnerSight_SlowMissiles, &args, 1, __FILE__, __LINE__);
+    SKILLS_IterateUnitsInAuraRange(pGame, pUnit, 0, 0, SKILLS_EvaluateSkillFormula(pUnit, pSkillsTxtRecord->dwAuraRangeCalc, nSkillId, nSkillLevel), pSkillsTxtRecord->dwAuraFilter, SKILLS_AuraCallback_InnerSight_SlowMissiles, &args, 1, __FILE__, __LINE__);
     return 1;
 }
 
@@ -735,7 +735,7 @@ int32_t __fastcall SKILLS_SrvDo012_Strafe(D2GameStrc* pGame, D2UnitStrc* pUnit, 
     D2UnitStrc* pTarget = SUNIT_GetServerUnit(pGame, SKILLS_GetParam2(pSkill), nTargetGUID);
     if (!pTarget)
     {
-        pTarget = sub_6FD107F0(pGame, pUnit, 0, 0, nAuraRange, 3, nTargetGUID, 0);
+        pTarget = SKILLS_FindTargetInAuraRange(pGame, pUnit, 0, 0, nAuraRange, 3, nTargetGUID, 0);
         if (!pTarget)
         {
             return 1;
@@ -780,7 +780,7 @@ int32_t __fastcall SKILLS_SrvDo012_Strafe(D2GameStrc* pGame, D2UnitStrc* pUnit, 
         return 0;
     }
 
-    D2UnitStrc* v23 = sub_6FD107F0(pGame, pUnit, 0, 0, nAuraRange, 3, pTarget->dwUnitId, 0);
+    D2UnitStrc* v23 = SKILLS_FindTargetInAuraRange(pGame, pUnit, 0, 0, nAuraRange, 3, pTarget->dwUnitId, 0);
     if (v23)
     {
         SKILLS_SetParam2(pSkill, v23->dwUnitType);
@@ -812,7 +812,7 @@ int32_t __fastcall SKILLS_SrvDo013_Fend_Zeal_Fury(D2GameStrc* pGame, D2UnitStrc*
     D2UnitStrc* pTarget = SUNIT_GetServerUnit(pGame, SKILLS_GetParam2(pSkill), nTargetGUID);
     if (!pTarget || !UNITS_IsInMeleeRange(pUnit, pTarget, 0))
     {
-        pTarget = sub_6FD107F0(pGame, pUnit, 0, 0, nAuraRange, 0x20003, nTargetGUID, 0);
+        pTarget = SKILLS_FindTargetInAuraRange(pGame, pUnit, 0, 0, nAuraRange, 0x20003, nTargetGUID, 0);
     }
 
     if (!pTarget)
@@ -854,7 +854,7 @@ int32_t __fastcall SKILLS_SrvDo013_Fend_Zeal_Fury(D2GameStrc* pGame, D2UnitStrc*
         return 0;
     }
 
-    D2UnitStrc* v16 = sub_6FD107F0(pGame, pUnit, 0, 0, nAuraRange, 131075, pTarget ? pTarget->dwUnitId : -1, 0);
+    D2UnitStrc* v16 = SKILLS_FindTargetInAuraRange(pGame, pUnit, 0, 0, nAuraRange, 131075, pTarget ? pTarget->dwUnitId : -1, 0);
     if (!v16)
     {
         return 0;
@@ -885,7 +885,7 @@ int32_t __fastcall SKILLS_SrvDo014_LightningStrike(D2GameStrc* pGame, D2UnitStrc
     SUNITDMG_DrainItemDurability(pGame, pUnit, pTarget, 0);
     const int32_t nParam0 = SKILLS_EvaluateSkillFormula(pUnit, pSkillsTxtRecord->dwCalc[0], nSkillId, nSkillLevel);
 
-    D2UnitStrc* v13 = sub_6FD107F0(pGame, pUnit, CLIENTS_GetUnitX(pTarget), CLIENTS_GetUnitY(pTarget), nParam0, 3, pTarget->dwUnitId, 0);
+    D2UnitStrc* v13 = SKILLS_FindTargetInAuraRange(pGame, pUnit, CLIENTS_GetUnitX(pTarget), CLIENTS_GetUnitY(pTarget), nParam0, 3, pTarget->dwUnitId, 0);
     if (!v13)
     {
         return 0;

@@ -1128,7 +1128,7 @@ void __fastcall EVENTS_HpRegen(D2UnitStrc* pUnit)
 
         if (nHpPctDiff > 4)
         {
-            sub_6FCC6270(pUnit, nHpPct);
+            SUNIT_QueueMsg_LifePercent(pUnit, nHpPct);
             STATLIST_SetUnitStat(pUnit, STAT_LAST_SENT_HP_PCT, nHpPct, 0);
         }
     }
@@ -1505,7 +1505,7 @@ void __fastcall sub_6FC81650(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2ClientStr
         sub_6FC82270(pGame, pPlayer, pClient);
     }
 
-    sub_6FCC6540(pPlayer, pClient);
+    SUNIT_SendQueuedMsgs(pPlayer, pClient);
 
     if (pPlayer)
     {
@@ -1516,7 +1516,7 @@ void __fastcall sub_6FC81650(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2ClientStr
 
         if (pPlayer->dwFlags & 0x100)
         {
-            sub_6FCC5FA0(pPlayer, pClient);
+            SUNIT_SendHoverText(pPlayer, pClient);
         }
 
         if (pPlayer->dwFlags & 0x8000)
@@ -1532,7 +1532,7 @@ void __fastcall sub_6FC81650(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2ClientStr
 
     if (D2COMMON_10530_D2CheckStatlistFlagDMGRed(pPlayer))
     {
-        sub_6FCC5F20(pPlayer, pClient);
+        SUNIT_SendItemOverlay(pPlayer, pClient);
     }
 
     D2Common_10512(pPlayer, pOtherPlayer, STAT_VELOCITYPERCENT, (void(__fastcall*)(D2UnitStrc*, int32_t, int32_t, D2UnitStrc*))D2GAME_UpdateAttribute_6FC822D0);
