@@ -1,6 +1,7 @@
 #include "Server.h"
 
 #include <algorithm>
+#include <cstddef>
 
 #include <Fog.h>
 #include <Storm.h>
@@ -9,6 +10,10 @@
 
 #include "Client.h"
 #include "D2Net.h"
+
+
+static_assert(offsetof(D2GSPacketSrv9C, nPacketSize) == offsetof(D2GSPacketSrv9D, nPacketSize), "0x9C and 0x9D share the size lookup");
+static_assert(offsetof(D2GSPacketClt14, szMessage) == offsetof(D2GSPacketClt15, szMessage), "0x14 and 0x15 share the size lookup");
 
 
 QServer* gpServer;
@@ -248,7 +253,7 @@ int32_t __fastcall SERVER_GetServerPacketSize(D2PacketBufferStrc* pBuffer, uint3
 			return 0;
 		}
 
-		*pSize = *(uint16_t*)&pBuffer->data[1];
+		*pSize = ((const D2GSPacketSrv16*)pBuffer->data)->nSize;
 		return *pSize;
 	}
 	case 0x26u:
@@ -258,7 +263,7 @@ int32_t __fastcall SERVER_GetServerPacketSize(D2PacketBufferStrc* pBuffer, uint3
 			return 0;
 		}
 
-		const char* v6 = (const char*)&pBuffer->data[10];
+		const char* v6 = ((const D2GSPacketSrv26*)pBuffer->data)->szName;
 		const int32_t v7 = SStrLen(v6) + 11;
 		if (nBufferSize < v7)
 		{
@@ -282,7 +287,7 @@ int32_t __fastcall SERVER_GetServerPacketSize(D2PacketBufferStrc* pBuffer, uint3
 			return 0;
 		}
 
-		*pSize = pBuffer->data[1];
+		*pSize = ((const D2GSPacketSrv3E*)pBuffer->data)->nSize;
 		return *pSize;
 	}
 	case 0x5Bu:
@@ -292,7 +297,7 @@ int32_t __fastcall SERVER_GetServerPacketSize(D2PacketBufferStrc* pBuffer, uint3
 			return 0;
 		}
 
-		*pSize = *(uint16_t*)&pBuffer->data[1];
+		*pSize = ((const D2GSPacketSrv5B*)pBuffer->data)->nPacketLen;
 		return *pSize;
 	}
 	case 0x94u:
@@ -302,7 +307,7 @@ int32_t __fastcall SERVER_GetServerPacketSize(D2PacketBufferStrc* pBuffer, uint3
 			return 0;
 		}
 
-		*pSize = 3 * (pBuffer->data[1] + 2);
+		*pSize = 3 * (((const D2GSPacketSrv94*)pBuffer->data)->nSkills + 2);
 		return *pSize;
 	}
 	case 0x9Cu:
@@ -313,7 +318,8 @@ int32_t __fastcall SERVER_GetServerPacketSize(D2PacketBufferStrc* pBuffer, uint3
 			return 0;
 		}
 
-		*pSize = pBuffer->data[2];
+		// nPacketSize is at the same offset in D2GSPacketSrv9C and D2GSPacketSrv9D
+		*pSize = ((const D2GSPacketSrv9C*)pBuffer->data)->nPacketSize;
 		return *pSize;
 	}
 	case 0xA6u:
@@ -333,7 +339,7 @@ int32_t __fastcall SERVER_GetServerPacketSize(D2PacketBufferStrc* pBuffer, uint3
 			return 0;
 		}
 
-		*pSize = pBuffer->data[6];
+		*pSize = ((const D2GSPacketSrvA8*)pBuffer->data)->nSize;
 		return *pSize;
 	}
 	case 0xAAu:
@@ -343,7 +349,7 @@ int32_t __fastcall SERVER_GetServerPacketSize(D2PacketBufferStrc* pBuffer, uint3
 			return 0;
 		}
 
-		*pSize = pBuffer->data[6];
+		*pSize = ((const D2GSPacketSrvAA*)pBuffer->data)->nSize;
 		return *pSize;
 	}
 	case 0xACu:
@@ -353,7 +359,7 @@ int32_t __fastcall SERVER_GetServerPacketSize(D2PacketBufferStrc* pBuffer, uint3
 			return 0;
 		}
 
-		*pSize = pBuffer->data[12];
+		*pSize = ((const D2GSPacketSrvAC*)pBuffer->data)->nPacketLength;
 		return *pSize;
 	}
 	case 0xAEu:
@@ -582,7 +588,8 @@ int32_t __fastcall SERVER_GetClientPacketSize(D2PacketBufferStrc* pBuffer, uint3
 			return *pSize;
 		}
 
-		const char* v7 = (const char*)&pBuffer->data[3];
+		// szMessage is at the same offset in D2GSPacketClt14 and D2GSPacketClt15
+		const char* v7 = ((const D2GSPacketClt14*)pBuffer->data)->szMessage;
 		const int32_t v8 = SStrLen(v7) + 4;
 		if (nBufferSize < v8)
 		{
@@ -704,9 +711,10 @@ int32_t __fastcall sub_6FC020B0(int32_t a1, int32_t nClientId, int32_t a3, int32
 //D2Net.0x6FC020E0
 int32_t __fastcall sub_6FC020E0(int32_t a1, int32_t a2, int32_t a3, int32_t a4)
 {
-	const uint8_t data[1] = { 0x6F };
+	D2GSPacketSrv6F packet6F = {};
+	packet6F.nHeader = 0x6F;
 
-	FOG_10175(gpServer, data, sizeof(data), a2);
+	FOG_10175(gpServer, (const uint8_t*)&packet6F, sizeof(packet6F), a2);
 	return 1;
 }
 
@@ -763,8 +771,9 @@ void __stdcall SERVER_SetHackListEnabled(BOOL bEnabled)
 //D2Net.0x6FC02220 (#10004)
 void __stdcall SERVER_Release()
 {
-	const uint8_t data[1] = { 0xAF };
-	FOG_10152(gpServer, data, sizeof(data));
+	D2GSPacketSrvAF packetAF = {};
+	packetAF.nHeader = 0xAF;
+	FOG_10152(gpServer, (const uint8_t*)&packetAF, sizeof(packetAF));
 
 	gpServer = nullptr;
 }
