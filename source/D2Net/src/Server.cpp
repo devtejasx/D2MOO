@@ -627,13 +627,13 @@ int32_t __fastcall SERVER_GetClientPacketSize(D2PacketBufferStrc* pBuffer, uint3
 }
 
 //D2Net.0x6FC01FA0 (#10039)
-D2NET_CLIENT_SendFunctionType __stdcall D2NET_10039()
+D2NET_CLIENT_SendToServerFunctionType __stdcall CLIENT_GetSendToServerFunction()
 {
-	return CLIENT_Send;
+	return CLIENT_SendToServer;
 }
 
 //D2Net.0x6FC01FB0 (#10040)
-D2NET_SERVER_GetClientGameGUIDFunctionType __stdcall D2NET_10040()
+D2NET_SERVER_GetClientGameGUIDFunctionType __stdcall SERVER_GetClientGameGUIDFunction()
 {
 	return SERVER_GetClientGameGUID;
 }
@@ -697,7 +697,7 @@ int32_t __fastcall sub_6FC020B0(int32_t a1, int32_t nClientId, int32_t a3, int32
 {
 	uint8_t data[2] = { 0xAE, 1 };
 
-	D2NET_10006(0, nClientId, data, sizeof(data));
+	SERVER_SendToClient(0, nClientId, data, sizeof(data));
 	return 1;
 }
 
@@ -715,7 +715,7 @@ int32_t __fastcall sub_6FC02110()
 {
 	uint8_t data[2] = { 0xAE, 0 };
 
-	return D2NET_10006(0, 0, data, sizeof(data));
+	return SERVER_SendToClient(0, 0, data, sizeof(data));
 }
 
 //D2Net.0x6FC02130 (#10002)
@@ -791,7 +791,7 @@ int32_t __stdcall SERVER_ReadFromMessageList2(uint8_t* pBuffer, int32_t nBufferS
 }
 
 //D2Net.0x6FC022B0 (#10006)
-uint32_t __stdcall D2NET_10006(int8_t a1, int32_t nClientId, void* pBufferArg, uint32_t nBufferSize)
+uint32_t __stdcall SERVER_SendToClient(int8_t a1, int32_t nClientId, void* pBufferArg, uint32_t nBufferSize)
 {
 	const uint8_t* pBuffer = (const uint8_t*)pBufferArg;
 

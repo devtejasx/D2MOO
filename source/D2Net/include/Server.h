@@ -7,7 +7,7 @@
 #include "Packet.h"
 
 using D2NET_Unk_Callback = void (__stdcall*) (int32_t nClientId, const char* szFile, int32_t nLine);
-using D2NET_CLIENT_SendFunctionType = int32_t (__stdcall*) (int32_t nUnused, const uint8_t* pBuffer, int32_t nBufferSize);
+using D2NET_CLIENT_SendToServerFunctionType = int32_t (__stdcall*) (int32_t nUnused, const uint8_t* pBuffer, int32_t nBufferSize);
 using D2NET_SERVER_GetClientGameGUIDFunctionType = int32_t(__stdcall*)(int32_t nClientId);
 
 //D2Net.0x6FC01B30 (#10024)
@@ -17,9 +17,9 @@ D2NET_DLL_DECL int32_t __fastcall SERVER_GetServerPacketSize(D2PacketBufferStrc*
 //D2Net.0x6FC01E60 (#10031)
 D2NET_DLL_DECL int32_t __fastcall SERVER_GetClientPacketSize(D2PacketBufferStrc* pBuffer, uint32_t nBufferSize, int32_t* pSize);
 //D2Net.0x6FC01FA0 (#10039)
-D2NET_DLL_DECL D2NET_CLIENT_SendFunctionType __stdcall D2NET_10039();
+D2NET_DLL_DECL D2NET_CLIENT_SendToServerFunctionType __stdcall CLIENT_GetSendToServerFunction();
 //D2Net.0x6FC01FB0 (#10040)
-D2NET_DLL_DECL D2NET_SERVER_GetClientGameGUIDFunctionType __stdcall D2NET_10040();
+D2NET_DLL_DECL D2NET_SERVER_GetClientGameGUIDFunctionType __stdcall SERVER_GetClientGameGUIDFunction();
 //D2Net.0x6FC01FC0
 int32_t __fastcall SERVER_ReadPacketFromBufferCallback(QServer* nUnused, D2PacketBufferStrc* pPacketBuffer, int32_t nBufferSize);
 //D2Net.0x6FC01FE0
@@ -53,7 +53,7 @@ D2NET_DLL_DECL int32_t __stdcall SERVER_ReadFromMessageList0(uint8_t* pBuffer, i
 //D2Net.0x6FC02290 (#10012)
 D2NET_DLL_DECL int32_t __stdcall SERVER_ReadFromMessageList2(uint8_t* pBuffer, int32_t nBufferSize);
 //D2Net.0x6FC022B0 (#10006)
-D2NET_DLL_DECL uint32_t __stdcall D2NET_10006(int8_t a1, int32_t nClientId, void* pBufferArg, uint32_t nBufferSize);
+D2NET_DLL_DECL uint32_t __stdcall SERVER_SendToClient(int8_t a1, int32_t nClientId, void* pBufferArg, uint32_t nBufferSize);
 //D2Net.0x6FC02410 (#10014)
 D2NET_DLL_DECL void __stdcall SERVER_GetIpAddressStringFromClientId(int32_t nClientId, char* szBuffer, int32_t nBufferSize);
 //D2Net.0x6FC02430 (#10038)

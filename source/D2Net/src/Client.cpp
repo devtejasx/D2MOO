@@ -404,7 +404,7 @@ int32_t __stdcall CLIENT_ReadPacketsFromStream()
 }
 
 //D2Net.0x6FC01760 (#10005)
-int32_t __stdcall CLIENT_Send(int32_t nUnused, const uint8_t* pBuffer, int32_t nBufferSize)
+int32_t __stdcall CLIENT_SendToServer(int32_t nUnused, const uint8_t* pBuffer, int32_t nBufferSize)
 {
 	if (!gpPacketBuffer)
 	{

@@ -5,8 +5,8 @@ EXPORTS
 	SERVER_WaitForSingleObject 				@10002 NONAME
 	SERVER_Initialize 						@10003 NONAME
 	SERVER_Release 							@10004 NONAME
-	CLIENT_Send 							@10005 NONAME
-	D2NET_10006 							@10006 NONAME
+	CLIENT_SendToServer						@10005 NONAME
+	SERVER_SendToClient						@10006 NONAME
 	CLIENT_DequeueGamePacket 				@10007 NONAME
 	CLIENT_DequeueSystemPacket 				@10008 NONAME
 ;------------------------UNUSED------------------------
@@ -39,5 +39,5 @@ EXPORTS
 	D2NET_10036								@10036 NONAME
 	SERVER_GetSocketFromClientId			@10037 NONAME
 	SERVER_GetIpAddressFromClientId			@10038 NONAME
-	D2NET_10039								@10039 NONAME
-	D2NET_10040								@10040 NONAME
+	CLIENT_GetSendToServerFunction			@10039 NONAME
+	SERVER_GetClientGameGUIDFunction		@10040 NONAME

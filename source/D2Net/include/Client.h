@@ -24,7 +24,7 @@ DWORD __stdcall CLIENT_ThreadProc(void* a1);
 //D2Net.0x6FC015C0
 int32_t __stdcall CLIENT_ReadPacketsFromStream();
 //D2Net.0x6FC01760 (#10005)
-D2NET_DLL_DECL int32_t __stdcall CLIENT_Send(int32_t nUnused, const uint8_t* pBuffer, int32_t nBufferSize);
+D2NET_DLL_DECL int32_t __stdcall CLIENT_SendToServer(int32_t nUnused, const uint8_t* pBuffer, int32_t nBufferSize);
 //D2Net.0x6FC01810
 void __fastcall CLIENT_ReadPacketFromBuffer(D2PacketBufferStrc* pBuffer, int32_t nBufferSize);
 //D2Net.0x6FC019A0 (#10013)
