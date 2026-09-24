@@ -525,7 +525,12 @@ bool __fastcall ACT1Q2_SeqCallback(D2QuestDataStrc* pQuestData)
 		return false;
 	}
 
+#ifdef NO_BUG_FIX
+	// Original game checks pQuestData->pfSeqFilter but calls pQuest->pfSeqFilter below.
 	if (IsBadCodePtr((FARPROC)pQuestData->pfSeqFilter))
+#else
+	if (IsBadCodePtr((FARPROC)pQuest->pfSeqFilter))
+#endif
 	{
 		FOG_DisplayAssert("pQuestInfo->pSequence", __FILE__, __LINE__);
 		exit(-1);
