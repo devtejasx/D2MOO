@@ -1,6 +1,7 @@
 #include "UNIT/SUnitDmg.h"
 
 #include <algorithm>
+#include <limits>
 
 #include <D2BitManip.h>
 #include <D2Math.h>
@@ -3028,7 +3029,7 @@ uint32_t __fastcall SUNITDMG_ComputeExperienceGain(D2GameStrc* pGame, D2UnitStrc
 		return 1;
 	}
 
-	nDefenderExperience = std::min(nDefenderExperience, (uint32_t)(INT_MAX >> 8));
+	nDefenderExperience = std::min(nDefenderExperience, (uint32_t)(std::numeric_limits<int32_t>::max() >> 8));
 
 	int32_t nClassId = 0;
 	if (pAttacker && pAttacker->dwUnitType == UNIT_PLAYER)
@@ -3081,7 +3082,7 @@ uint32_t __fastcall SUNITDMG_ComputeExperienceGain(D2GameStrc* pGame, D2UnitStrc
 		const int32_t nRatio2 = DATATBLS_GetExpRatio(0);
 		if (nRatio2 > 0 && nRatio2 < 32)
 		{
-			if (nResult <= INT_MAX >> (nRatio2 + (nRatio1 >> nRatio2)))
+			if (nResult <= std::numeric_limits<int32_t>::max() >> (nRatio2 + (nRatio1 >> nRatio2)))
 			{
 				nResult = nResult * nRatio1 >> nRatio2;
 			}

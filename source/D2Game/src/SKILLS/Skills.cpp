@@ -1,6 +1,7 @@
 #include "SKILLS/Skills.h"
 
 #include <algorithm>
+#include <limits>
 
 #include <D2BitManip.h>
 
@@ -896,7 +897,7 @@ D2UnitStrc* __fastcall SKILLS_FindAuraTarget(D2GameStrc* pGame, D2UnitStrc* pUni
     D2_6FD106F0_Strc arg = {};
 
     arg.pUnit = nullptr;
-    arg.nDistance = INT_MAX;
+    arg.nDistance = std::numeric_limits<int32_t>::max();
     arg.nX = CLIENTS_GetUnitX(pUnit);
     arg.nY = CLIENTS_GetUnitY(pUnit);
     arg.pCallback = pCallback;

@@ -30,6 +30,7 @@
 
 #include <stddef.h>
 #include <stdlib.h>
+#include <limits>
 #include <windows.h>
 
 #include <Fog.h>
@@ -233,7 +234,7 @@ HSARCHIVE __fastcall ARCHIVE_FindAndOpenArchive(LPSTR szOutPath, LPCSTR szModule
 		*(pLastBackslash + 1) = 0;
 	}
 
-	SStrNCat(szOutPath, szFileName, INT_MAX);
+	SStrNCat(szOutPath, szFileName, std::numeric_limits<int32_t>::max());
 	if (SFileOpenArchive(szOutPath, nPriority, bFileOpenFlags, &hArchiveFile))
 	{
 		return hArchiveFile;

@@ -4,6 +4,7 @@
 #include <Units/Units.h>
 
 #include <algorithm>
+#include <limits>
 
 struct D2PathMovStrc
 {
@@ -279,7 +280,7 @@ int __fastcall PATH_FindSubpathWithoutObstacles(D2PathInfoStrc* pInfo, D2PathPoi
 		{
 			return rPath.pPoints[rPath.nPoints - 1].SquaredDistance(pInfo->tTargetCoord);
 		}
-		return INT_MAX;
+		return std::numeric_limits<int32_t>::max();
 	};
 
 	const int nSquaredDist1 = ComputeSquaredDistToTarget(tCache1);

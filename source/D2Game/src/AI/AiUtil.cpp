@@ -1,6 +1,7 @@
 #include "AI/AiUtil.h"
 
 #include <algorithm>
+#include <limits>
 
 #include <D2Collision.h>
 #include <D2Dungeon.h>
@@ -706,7 +707,7 @@ D2UnitStrc* __fastcall sub_6FCF2110(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiCo
 
 	D2UnitStrc* pTargetUnit = nullptr;
 	int32_t nDistanceToTarget = 0;
-	int32_t nCurrentDistance = INT_MAX;
+	int32_t nCurrentDistance = std::numeric_limits<int32_t>::max();
 
 	if (!sub_6FCF2920(pGame, pUnit, v66, 0, &pTargetUnit, &nDistanceToTarget))
 	{
@@ -714,12 +715,12 @@ D2UnitStrc* __fastcall sub_6FCF2110(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiCo
 		{
 			D2UnkAiCallbackArgStrc arg = {};
 			arg.pTarget = nullptr;
-			arg.nDistance = INT_MAX;
+			arg.nDistance = std::numeric_limits<int32_t>::max();
 			arg.unk0x08 = v66;
 			arg.nMaxDistance = 35;
 			arg.unk0x10 = D2Common_10095(pRoom, CLIENTS_GetUnitX(pUnit), CLIENTS_GetUnitY(pUnit));
 			arg.pAlternativeTarget = nullptr;
-			arg.nAlternativeDistance = INT_MAX;
+			arg.nAlternativeDistance = std::numeric_limits<int32_t>::max();
 
 			if (sub_6FCF1E80(pGame, pUnit, &arg, nullptr, 5) && arg.pAlternativeTarget && sub_6FCF27B0(pUnit, &arg.pTarget, &arg.nDistance, arg.pAlternativeTarget, arg.nAlternativeDistance))
 			{
@@ -771,7 +772,7 @@ D2UnitStrc* __fastcall sub_6FCF2110(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiCo
 							{
 								if (SUNIT_IsDead(pTargetNode->pUnit))
 								{
-									nDistance = INT_MAX;
+									nDistance = std::numeric_limits<int32_t>::max();
 								}
 
 								while (1)
@@ -811,7 +812,7 @@ D2UnitStrc* __fastcall sub_6FCF2110(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiCo
 				pTargetNode = pTargetNode->pNext;
 			}
 
-			int32_t nMinDistance = INT_MAX;
+			int32_t nMinDistance = std::numeric_limits<int32_t>::max();
 
 			pTargetNode = pGame->pTargetNodes[9];
 			if (pTargetNode)
@@ -901,7 +902,7 @@ int32_t __fastcall sub_6FCF27B0(D2UnitStrc* pUnit, D2UnitStrc** ppTarget, int32_
 
 	D2AiCallback7ArgStrc arg = {};
 	arg.pTarget = nullptr;
-	arg.nDistance = INT_MAX;
+	arg.nDistance = std::numeric_limits<int32_t>::max();
 	arg.unk0x08 = *ppTarget;
 
 	sub_6FCF1E80(pUnit->pGame, pUnit, &arg, nullptr, 7);
@@ -1024,9 +1025,9 @@ int32_t __fastcall sub_6FCF2920(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t a3
 		{
 			D2UnkAiCallbackArgStrc2 arg = {};
 			arg.pTarget = nullptr;
-			arg.nDistance = INT_MAX;
+			arg.nDistance = std::numeric_limits<int32_t>::max();
 			arg.pAlternativeTarget = nullptr;
-			arg.nAlternativeDistance = INT_MAX;
+			arg.nAlternativeDistance = std::numeric_limits<int32_t>::max();
 
 			sub_6FCF1E80(pGame, pUnit, &arg, nullptr, 6);
 
@@ -1037,12 +1038,12 @@ int32_t __fastcall sub_6FCF2920(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t a3
 		{
 			D2UnkAiCallbackArgStrc arg = {};
 			arg.pTarget = nullptr;
-			arg.nDistance = INT_MAX;
+			arg.nDistance = std::numeric_limits<int32_t>::max();
 			arg.unk0x08 = a3;
 			arg.nMaxDistance = 35;
 			arg.unk0x10 = D2Common_10095(UNITS_GetRoom(pUnit), CLIENTS_GetUnitX(pUnit), CLIENTS_GetUnitY(pUnit));
 			arg.pAlternativeTarget = nullptr;
-			arg.nAlternativeDistance = INT_MAX;
+			arg.nAlternativeDistance = std::numeric_limits<int32_t>::max();
 
 			sub_6FCF1E80(pGame, pUnit, &arg, nullptr, 5);
 
@@ -1165,9 +1166,9 @@ D2UnitStrc* __fastcall sub_6FCF2CC0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_
 	{
 		D2UnkAiCallbackArgStrc2 arg = {};
 		arg.pTarget = nullptr;
-		arg.nDistance = INT_MAX;
+		arg.nDistance = std::numeric_limits<int32_t>::max();
 		arg.pAlternativeTarget = nullptr;
-		arg.nAlternativeDistance = INT_MAX;
+		arg.nAlternativeDistance = std::numeric_limits<int32_t>::max();
 
 		sub_6FCF1E80(pGame, pUnit, &arg, nullptr, 6);
 
@@ -1205,7 +1206,7 @@ D2UnitStrc* __fastcall sub_6FCF2CC0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_
 
 	if (pDistance)
 	{
-		*pDistance = INT_MAX;
+		*pDistance = std::numeric_limits<int32_t>::max();
 	}
 
 	return nullptr;

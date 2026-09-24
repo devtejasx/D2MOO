@@ -1,6 +1,7 @@
 #include "GAME/Clients.h"
 
 #include <algorithm>
+#include <limits>
 
 #include <Fog.h>
 #include <Storm.h>
@@ -482,8 +483,8 @@ D2ClientStrc* __fastcall CLIENTS_AddToGame(D2GameStrc* pGame, int32_t nClientId,
         pClient->nClassId = nClassIdOrCharTemplate;
     }
 
-    SStrCopy(pClient->szName, szClientName, INT_MAX);
-    SStrCopy(pClient->szAccount, szAccount, INT_MAX);
+    SStrCopy(pClient->szName, szClientName, std::numeric_limits<int32_t>::max());
+    SStrCopy(pClient->szAccount, szAccount, std::numeric_limits<int32_t>::max());
 
     pClient->nCharSaveTransactionToken = nCharSaveTransactionToken;
     pClient->pClientInfo = 0;

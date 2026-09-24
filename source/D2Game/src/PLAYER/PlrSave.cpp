@@ -1,5 +1,7 @@
 #include "PLAYER/PlrSave.h"
 
+#include <limits>
+
 #include <Fog.h>
 #include <File.h>
 #include <CRC.h>
@@ -329,7 +331,7 @@ int32_t __stdcall PLRSAVE_WriteItems_6FC89B50(D2InventoryStrc* pInventory, uint8
 
             if (!nSize && (uint16_t)nItemCount > 0u)
             {
-                nItemCount += UINT16_MAX;
+                nItemCount += std::numeric_limits<uint16_t>::max();
             }
         }
     }
@@ -351,7 +353,7 @@ int32_t __stdcall PLRSAVE_WriteItems_6FC89B50(D2InventoryStrc* pInventory, uint8
 
             if (!nSize && (uint16_t)nItemCount > 0u)
             {
-                nItemCount += UINT16_MAX;
+                nItemCount += std::numeric_limits<uint16_t>::max();
             }
 
             if (pLeftHandItem)
@@ -366,7 +368,7 @@ int32_t __stdcall PLRSAVE_WriteItems_6FC89B50(D2InventoryStrc* pInventory, uint8
 
                 if (!nSize && (uint16_t)nItemCount > 0u)
                 {
-                    nItemCount += UINT16_MAX;
+                    nItemCount += std::numeric_limits<uint16_t>::max();
                 }
             }
         }
@@ -382,7 +384,7 @@ int32_t __stdcall PLRSAVE_WriteItems_6FC89B50(D2InventoryStrc* pInventory, uint8
 
             if (!nSize && (uint16_t)nItemCount > 0u)
             {
-                nItemCount += UINT16_MAX;
+                nItemCount += std::numeric_limits<uint16_t>::max();
             }
 
             if (pRightHandItem)
@@ -397,7 +399,7 @@ int32_t __stdcall PLRSAVE_WriteItems_6FC89B50(D2InventoryStrc* pInventory, uint8
 
                 if (!nSize && (uint16_t)nItemCount > 0u)
                 {
-                    nItemCount += UINT16_MAX;
+                    nItemCount += std::numeric_limits<uint16_t>::max();
                 }
             }
         }
@@ -416,7 +418,7 @@ int32_t __stdcall PLRSAVE_WriteItems_6FC89B50(D2InventoryStrc* pInventory, uint8
 
             if (!nSize && (uint16_t)nItemCount > 0u)
             {
-                nItemCount += UINT16_MAX;
+                nItemCount += std::numeric_limits<uint16_t>::max();
             }
         }
 
@@ -432,7 +434,7 @@ int32_t __stdcall PLRSAVE_WriteItems_6FC89B50(D2InventoryStrc* pInventory, uint8
 
             if (!nSize && (uint16_t)nItemCount > 0u)
             {
-                nItemCount += UINT16_MAX;
+                nItemCount += std::numeric_limits<uint16_t>::max();
             }
         }
     }
@@ -450,7 +452,7 @@ int32_t __stdcall PLRSAVE_WriteItems_6FC89B50(D2InventoryStrc* pInventory, uint8
 
         if (!nSize && (uint16_t)nItemCount > 0u)
         {
-            nItemCount += UINT16_MAX;
+            nItemCount += std::numeric_limits<uint16_t>::max();
         }
     }
 

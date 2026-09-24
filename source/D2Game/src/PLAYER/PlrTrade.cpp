@@ -1,6 +1,7 @@
 #include "PLAYER/PlrTrade.h"
 
 #include <algorithm>
+#include <limits>
 
 #include <Fog.h>
 #include <Storm.h>
@@ -1135,7 +1136,7 @@ void __fastcall PLRTRADE_SendEventPacketToPlayer(D2UnitStrc* pPlayer, D2C_SRV2CL
 
     if (szSource)
     {
-        SStrCopy(packet5A.szText, szSource, INT_MAX);
+        SStrCopy(packet5A.szText, szSource, std::numeric_limits<int32_t>::max());
         packet5A.szText[15] = 0;
     }
     else

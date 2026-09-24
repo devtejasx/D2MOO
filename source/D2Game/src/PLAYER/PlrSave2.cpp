@@ -1,4 +1,5 @@
 #include <ctime>
+#include <limits>
 
 #include "PLAYER/PlrSave2.h"
 
@@ -110,7 +111,7 @@ int16_t __fastcall PLRSAVE2_GetItemIndex(D2UnitStrc* pPlayer, int32_t nGUID)
         D2UnitStrc* pNextItem = INVENTORY_GetNextItem(pItem);
         if ((pCheckedItem ? pCheckedItem->dwUnitId : -1) == nGUID)
         {
-            D2_ASSERT(nIdx < SHRT_MAX);
+            D2_ASSERT(nIdx < std::numeric_limits<int16_t>::max());
             return nIdx;
         }
 
@@ -161,7 +162,7 @@ int32_t __fastcall PLRSAVE2_WriteSaveHeader(D2GameStrc* pGame, D2UnitStrc* pPlay
 
     saveHeader.dwHeaderMagic = D2SMAGIC_HEADER;
     saveHeader.dwVersion = 96;
-    SStrCopy(saveHeader.szName, szName, INT_MAX);
+    SStrCopy(saveHeader.szName, szName, std::numeric_limits<int32_t>::max());
     saveHeader.dwSaveFlags = CLIENTS_GetFlags(pClient);
     if (pGame->bExpansion)
     {

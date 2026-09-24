@@ -2,6 +2,7 @@
 
 #include <intrin.h>
 #include <algorithm>
+#include <limits>
 
 #include <D2BitManip.h>
 #include <Fog.h>
@@ -311,13 +312,13 @@ void __fastcall D2GAME_PACKETS_SendPacket0x68_6FC3CA90(D2ClientStrc* pClient, ui
     }
 
     int32_t nVelocity = STATLIST_UnitGetStatValue(pMonster, STAT_VELOCITYPERCENT, 0);
-    if (nVelocity < SHRT_MIN)
+    if (nVelocity < std::numeric_limits<int16_t>::min())
     {
-        nVelocity = SHRT_MIN;
+        nVelocity = std::numeric_limits<int16_t>::min();
     }
-    else if (nVelocity >= SHRT_MAX)
+    else if (nVelocity >= std::numeric_limits<int16_t>::max())
     {
-        nVelocity = SHRT_MAX;
+        nVelocity = std::numeric_limits<int16_t>::max();
     }
 
     packet68.nVelocity = nVelocity;
@@ -359,13 +360,13 @@ void __fastcall D2GAME_PACKETS_SendPacket0x67_6FC3CBC0(D2ClientStrc* pClient, ui
     }
 
     int32_t nVelocity = STATLIST_UnitGetStatValue(pMonster, STAT_VELOCITYPERCENT, 0);
-    if (nVelocity < SHRT_MIN)
+    if (nVelocity < std::numeric_limits<int16_t>::min())
     {
-        nVelocity = SHRT_MIN;
+        nVelocity = std::numeric_limits<int16_t>::min();
     }
-    else if (nVelocity >= SHRT_MAX)
+    else if (nVelocity >= std::numeric_limits<int16_t>::max())
     {
-        nVelocity = SHRT_MAX;
+        nVelocity = std::numeric_limits<int16_t>::max();
     }
 
     packet67.nVelocity = nVelocity;
@@ -401,13 +402,13 @@ void __fastcall D2GAME_PACKETS_SendPacket0x68_6FC3CCB0(D2ClientStrc* pClient, ui
     }
 
     int32_t nVelocity = STATLIST_UnitGetStatValue(pMonster, STAT_VELOCITYPERCENT, 0);
-    if (nVelocity < SHRT_MIN)
+    if (nVelocity < std::numeric_limits<int16_t>::min())
     {
-        nVelocity = SHRT_MIN;
+        nVelocity = std::numeric_limits<int16_t>::min();
     }
-    else if (nVelocity >= SHRT_MAX)
+    else if (nVelocity >= std::numeric_limits<int16_t>::max())
     {
-        nVelocity = SHRT_MAX;
+        nVelocity = std::numeric_limits<int16_t>::max();
     }
 
     packet68.nVelocity = nVelocity;
@@ -451,13 +452,13 @@ void __fastcall D2GAME_PACKETS_SendPacket0x67_6FC3CDE0(D2ClientStrc* pClient, ui
     }
 
     int32_t nVelocity = STATLIST_UnitGetStatValue(pMonster, STAT_VELOCITYPERCENT, 0);
-    if (nVelocity < SHRT_MIN)
+    if (nVelocity < std::numeric_limits<int16_t>::min())
     {
-        nVelocity = SHRT_MIN;
+        nVelocity = std::numeric_limits<int16_t>::min();
     }
-    else if (nVelocity >= SHRT_MAX)
+    else if (nVelocity >= std::numeric_limits<int16_t>::max())
     {
-        nVelocity = SHRT_MAX;
+        nVelocity = std::numeric_limits<int16_t>::max();
     }
 
     packet67.nVelocity = nVelocity;
@@ -609,7 +610,7 @@ void __fastcall sub_6FC3D1F0(D2ClientStrc* pClient, int32_t nUnitGUID, uint8_t n
     packet59.nHeader = 0x59u;
     packet59.dwGUID = nUnitGUID;
     packet59.nClass = nClassId;
-    SStrCopy(packet59.szName, szName, INT_MAX);
+    SStrCopy(packet59.szName, szName, std::numeric_limits<int32_t>::max());
     packet59.nPosX = nX;
     packet59.nPosY = nY;
     D2GAME_PACKETS_SendPacket_6FC3C710(pClient, &packet59, sizeof(packet59));
@@ -1126,7 +1127,7 @@ void __fastcall sub_6FC3DF80(D2ClientStrc* pClient1, D2UnitStrc* pPlayer, D2Clie
     packet5B.nPartyFlags = 0;
     packet5B.unk0x20 = CLIENTS_GetGuildFlags(pClient2);
 
-    SStrCopy(packet5B.szName, UNITS_GetPlayerData(pPlayer)->szName, INT_MAX);
+    SStrCopy(packet5B.szName, UNITS_GetPlayerData(pPlayer)->szName, std::numeric_limits<int32_t>::max());
 
     CLIENTS_GetGuildTag(pClient2, (int32_t*)packet5B.unk0x22);
 
@@ -1236,9 +1237,9 @@ void __fastcall sub_6FC3E200(D2ClientStrc* pClient, D2UnitStrc* pUnit)
 
     packet7F.nUnitGUID = pUnit->dwUnitId;
     packet7F.nLifePercentage = nLifePercentage;
-    if (nLifePercentage >= USHRT_MAX)
+    if (nLifePercentage >= std::numeric_limits<uint16_t>::max())
     {
-        packet7F.nLifePercentage = USHRT_MAX;
+        packet7F.nLifePercentage = std::numeric_limits<uint16_t>::max();
     }
 
     packet7F.nLevelId = DUNGEON_GetLevelIdFromRoom(UNITS_GetRoom(pUnit));

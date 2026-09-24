@@ -1,6 +1,7 @@
 #include "OBJECTS/Objects.h"
 
 #include <algorithm>
+#include <limits>
 
 #include <Fog.h>
 
@@ -2052,7 +2053,7 @@ void __fastcall OBJECTS_PopulationHandler(D2GameStrc* pGame, D2ActiveRoomStrc* p
         return;
     }
 
-    if (pObjectRegion->nPopulatedRooms == INT_MAX)
+    if (pObjectRegion->nPopulatedRooms == std::numeric_limits<int32_t>::max())
     {
         pObjectRegion->nPopulatedRooms = DUNGEON_GetNumberOfPopulatedRoomsInLevel(pGame->pAct[pObjectRegion->nAct], nLevelId);
     }

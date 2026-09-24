@@ -1,6 +1,7 @@
 #include "AI/AiBaal.h"
 
 #include <algorithm>
+#include <limits>
 
 #include <D2Collision.h>
 #include <D2Dungeon.h>
@@ -352,13 +353,13 @@ void __fastcall AITHINK_Fn145_UberBaal(D2GameStrc* pGame, D2UnitStrc* pUnit, D2A
 
 	// UBER TWEAK START
 	D2UbersAiCallbackArgStrc arg_target = {};
-	arg_target.nDistance = INT_MAX;
+	arg_target.nDistance = std::numeric_limits<int32_t>::max();
 	sub_6FCF1E80(pGame, pTarget ? pTarget : pUnit, &arg_target, AIUTIL_TargetCallback_Ubers, 1);
 	BOOL bAlone = (arg_target.nUberDiablo == 0 && arg_target.nUberMephisto == 0);
 	if (bAlone && pTarget)
 	{
 		D2UbersAiCallbackArgStrc arg_self = {};
-		arg_self.nDistance = INT_MAX;
+		arg_self.nDistance = std::numeric_limits<int32_t>::max();
 		sub_6FCF1E80(pGame, pUnit, &arg_self, AIUTIL_TargetCallback_Ubers, 1);
 		bAlone = (arg_self.nUberDiablo == 0 && arg_self.nUberMephisto == 0);
 	}

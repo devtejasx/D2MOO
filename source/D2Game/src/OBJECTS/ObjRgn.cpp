@@ -1,6 +1,7 @@
 #include "OBJECTS/ObjRgn.h"
 
 #include <algorithm>
+#include <limits>
 
 #include <D2DataTbls.h>
 #include <DataTbls/LevelsTbls.h>
@@ -39,7 +40,7 @@ int32_t __fastcall OBJRGN_AllocObjectControl(D2GameStrc* pGame)
         D2LevelsTxt* pLevelsTxtRecord = DATATBLS_GetLevelsTxtRecord(i);
         memset(pObjectRegion, 0x00, sizeof(D2ObjectRegionStrc));
         pObjectRegion->nAct = pLevelsTxtRecord->nAct;
-        pObjectRegion->nPopulatedRooms = INT_MAX;
+        pObjectRegion->nPopulatedRooms = std::numeric_limits<int32_t>::max();
         pObjectRegion->nTrapMonsterId = -1;
         pGame->pObjectControl->pObjectRegion[0] = pObjectRegion;
     }

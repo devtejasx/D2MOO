@@ -1,6 +1,7 @@
 #include "AI/AiTactics.h"
 
 #include <algorithm>
+#include <limits>
 
 #include <D2BitManip.h>
 #include <D2Math.h>
@@ -111,7 +112,7 @@ D2UnitStrc* __fastcall sub_6FCCFD70(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_
 
 	UnkAiStrc1 pCallbackArg = {};
 	pCallbackArg.pTarget = nullptr;
-	pCallbackArg.nDistance = INT_MAX;
+	pCallbackArg.nDistance = std::numeric_limits<int32_t>::max();
 	sub_6FCF1E80(pGame, pUnit, &pCallbackArg, sub_6FCCFDE0, 2);
 
 	if (!pCallbackArg.pTarget)
@@ -637,7 +638,7 @@ int32_t __fastcall sub_6FCD0E80(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc
 //D2Game.0x6FCD0F10
 void __fastcall AITACTICS_AddMessage(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pScrollTarget, uint16_t wMessage, int32_t bScrollMessage)
 {
-	if (!wMessage || wMessage > USHRT_MAX)
+	if (!wMessage || wMessage > std::numeric_limits<uint16_t>::max())
 	{
 		return;
 	}

@@ -1,6 +1,7 @@
 #include "PLAYER/PlrMsg.h"
 
 #include <algorithm>
+#include <limits>
 
 #include <Fog.h>
 #include <Storm.h>
@@ -1597,7 +1598,7 @@ void __fastcall D2GAME_PACKETS_HandleWhisper_6FC848A0(D2ClientStrc* pClient, voi
 {
     D2GSPacketSrv26Args* pPacket26Args = (D2GSPacketSrv26Args*)pArgs;
     D2GameStrc* pGame = CLIENTS_GetGame(pClient);
-    if (!SStrCmpI(CLIENTS_GetName(pClient), pPacket26Args->pPacket15->szName, INT_MAX))
+    if (!SStrCmpI(CLIENTS_GetName(pClient), pPacket26Args->pPacket15->szName, std::numeric_limits<int32_t>::max()))
     {
         const int32_t nUnitGUID = pPacket26Args->nUnitId;
         if (nUnitGUID != -1)
@@ -1650,7 +1651,7 @@ int32_t __fastcall D2GAME_PACKETCALLBACK_Rcv0x15_HandleChatMessage_6FC84950(D2Ga
     D2GSPacketSrv26 packet26 = {};
     if (SStrLen(szClientName))
     {
-        SStrCopy(packet26.szName, szClientName, INT_MAX);
+        SStrCopy(packet26.szName, szClientName, std::numeric_limits<int32_t>::max());
     }
     else
     {
@@ -1720,7 +1721,7 @@ int32_t __fastcall D2GAME_PACKETCALLBACK_Rcv0x15_HandleChatMessage_6FC84950(D2Ga
             packet5A.nType = EVENTTYPE_NOTLISTENINGTOYOU;
             packet5A.nColor = STRCOLOR_WHITE;
             packet5A.dwParam = 0;
-            SStrCopy(packet5A.szText, packet15.szName, INT_MAX);
+            SStrCopy(packet5A.szText, packet15.szName, std::numeric_limits<int32_t>::max());
             packet5A.szText[15] = 0;
             D2GAME_PACKETS_SendPacket0x5A_6FC3DEC0(SUNIT_GetClientFromPlayer(pUnit, __FILE__, __LINE__), &packet5A);
             return 0;
@@ -1734,7 +1735,7 @@ int32_t __fastcall D2GAME_PACKETCALLBACK_Rcv0x15_HandleChatMessage_6FC84950(D2Ga
             packet5A.nType = EVENTTYPE_NOTINGAME;
             packet5A.nColor = STRCOLOR_WHITE;
             packet5A.dwParam = 0;
-            SStrCopy(packet5A.szText, packet15.szName, INT_MAX);
+            SStrCopy(packet5A.szText, packet15.szName, std::numeric_limits<int32_t>::max());
             packet5A.szText[15] = 0;
             D2GAME_PACKETS_SendPacket0x5A_6FC3DEC0(SUNIT_GetClientFromPlayer(pUnit, __FILE__, __LINE__), &packet5A);
             return 0;
@@ -1747,7 +1748,7 @@ int32_t __fastcall D2GAME_PACKETCALLBACK_Rcv0x15_HandleChatMessage_6FC84950(D2Ga
         packet26.nUnitType = 2;
         packet26.dwUnitGUID = 0;
         packet26.nMessageColor = 0;
-        SStrCopy(packet26.szName, packet15.szName, INT_MAX);
+        SStrCopy(packet26.szName, packet15.szName, std::numeric_limits<int32_t>::max());
         packet26.szName[15] = 0;
         memcpy(packet26.szMessage, packet15.szMessage, sizeof(packet26.szMessage));
         D2GAME_PACKETS_SendPacket0x26_ServerMessage_6FC3DDF0(SUNIT_GetClientFromPlayer(pUnit, __FILE__, __LINE__), &packet26);

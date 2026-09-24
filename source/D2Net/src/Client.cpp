@@ -1,6 +1,7 @@
 #include "Client.h"
 
 #include <algorithm>
+#include <limits>
 
 #include <Fog.h>
 #include <Storm.h>
@@ -518,5 +519,5 @@ void __stdcall CLIENT_GetLocalIpAddressString(char* szBuffer)
 
 	const char* szLocalIpAddress = inet_ntoa(sa.sin_addr); // NOLINT
 
-	SStrCopy(szBuffer, szLocalIpAddress, INT_MAX);
+	SStrCopy(szBuffer, szLocalIpAddress, std::numeric_limits<int32_t>::max());
 }

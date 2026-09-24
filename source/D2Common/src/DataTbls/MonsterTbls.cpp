@@ -1,5 +1,7 @@
 #include "D2DataTbls.h"
 
+#include <limits>
+
 #include "D2Items.h"
 #include "D2Seed.h"
 #include <D2Lang.h>
@@ -427,7 +429,7 @@ void __fastcall DATATBLS_LoadMonStatsTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pMonStatsLinker = (D2TxtLinkStrc*)FOG_AllocLinker(__FILE__, __LINE__);
 	sgptDataTables->pMonStatsTxt = (D2MonStatsTxt*)DATATBLS_CompileTxt(hArchive, "monstats", pTbl, &sgptDataTables->nMonStatsTxtRecordCount, sizeof(D2MonStatsTxt));
 
-	D2_ASSERT(sgptDataTables->nMonStatsTxtRecordCount < SHRT_MAX);
+	D2_ASSERT(sgptDataTables->nMonStatsTxtRecordCount < std::numeric_limits<int16_t>::max());
 
 	if (sgptDataTables->nMonStatsTxtRecordCount > 0)
 	{
@@ -2732,7 +2734,7 @@ void __fastcall DATATBLS_LoadSomeMonsterTxts(HD2ARCHIVE hArchive)
 		}
 	}
 
-	D2_ASSERT(sgptDataTables->nTreasureClassEx < USHRT_MAX);
+	D2_ASSERT(sgptDataTables->nTreasureClassEx < std::numeric_limits<uint16_t>::max());
 
 	DATATBLS_LoadMonStats2Txt(hArchive);
 	DATATBLS_LoadMonPropTxt(hArchive);
