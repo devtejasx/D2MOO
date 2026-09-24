@@ -61,12 +61,12 @@ void __fastcall D2GAME_UpdateSummonAI_6FC401F0(D2GameStrc* pGame, D2UnitStrc* pU
     pNewTargetNode->pUnit = pUnit;
     pNewTargetNode->unk0x04 = a3;
 
-    pNewTargetNode->unk0x0C = pTargetNode;
+    pNewTargetNode->pPrev = pTargetNode;
     pNewTargetNode->pNext = pTargetNode->pNext;
 
     if (pTargetNode->pNext)
     {
-        pTargetNode->pNext->unk0x0C = pNewTargetNode;
+        pTargetNode->pNext->pPrev = pNewTargetNode;
     }
 
     pTargetNode->pNext = pNewTargetNode;
@@ -96,7 +96,7 @@ void __fastcall sub_6FC40280(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t a3, i
     if (pTargetNode)
     {
         pNewTargetNode->pNext = pTargetNode;
-        pTargetNode->unk0x0C = pNewTargetNode;
+        pTargetNode->pPrev = pNewTargetNode;
     }
 
     pGame->pTargetNodes[nNodeIndex] = pNewTargetNode;
@@ -170,13 +170,15 @@ void __fastcall D2GAME_TARGETS_Last_6FC40380(D2GameStrc* pGame, D2UnitStrc* pUni
 
             if (pTargetNode->pNext)
             {
-                pTargetNode->pNext->unk0x0C = nullptr;
+                pTargetNode->pNext->pPrev = nullptr;
             }
 
             D2_FREE_POOL(pGame->pMemoryPool, pTargetNode);
             pUnit->dwNodeIndex = 11;
             return;
         }
+
+        // Not the head: the else branch at 6FC4041D is the unlink below, shared with the < 8 path.
     }
     else
     {
@@ -193,10 +195,10 @@ void __fastcall D2GAME_TARGETS_Last_6FC40380(D2GameStrc* pGame, D2UnitStrc* pUni
         }
     }
 
-    pTargetNode->unk0x0C->pNext = pTargetNode->pNext;
+    pTargetNode->pPrev->pNext = pTargetNode->pNext;
     if (pTargetNode->pNext)
     {
-        pTargetNode->pNext->unk0x0C = pTargetNode->unk0x0C;
+        pTargetNode->pNext->pPrev = pTargetNode->pPrev;
     }
 
     D2_FREE_POOL(pGame->pMemoryPool, pTargetNode);
