@@ -1,5 +1,7 @@
 #include "MONSTER/MonsterChoose.h"
 
+#include <iterator>
+
 #include <D2BitManip.h>
 
 #include <Drlg/D2DrlgDrlg.h>
@@ -61,7 +63,7 @@ void __stdcall sub_6FC62020(D2SeedStrc* pSeed, D2MonRegDataStrc* pMonRegData, in
 
     if (!pMonRegData->nComponentVariantsMax)
     {
-        for (int32_t i = 0; i < 16; ++i)
+        for (int32_t i = 0; i < std::size(pMonStats2TxtRecord->nComponentChoiceCounts); ++i)
         {
             if (pMonStats2TxtRecord->nComponentChoiceCounts[i] > 1u)
             {
@@ -84,7 +86,7 @@ void __stdcall sub_6FC62020(D2SeedStrc* pSeed, D2MonRegDataStrc* pMonRegData, in
 
     uint8_t indices[16] = {};
     int32_t nMaxIndex = 0;
-    for (int32_t i = 0; i < 16; ++i)
+    for (int32_t i = 0; i < std::size(pMonStats2TxtRecord->nComponentChoiceCounts); ++i)
     {
         if (pMonStats2TxtRecord->nComponentChoiceCounts[i] > 1u)
         {

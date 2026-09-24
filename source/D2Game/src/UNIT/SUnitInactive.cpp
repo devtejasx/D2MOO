@@ -1,5 +1,7 @@
 #include "UNIT/SUnitInactive.h"
 
+#include <iterator>
+
 #include <Fog.h>
 #include <D2BitManip.h>
 
@@ -218,7 +220,7 @@ void __fastcall SUNITINACTIVE_RestoreInactiveUnits(D2GameStrc* pGame, D2ActiveRo
 						const uint8_t* pUMods = MONSTERUNIQUE_GetUMods(pUnit);
 						if (pUMods)
 						{
-							for (int32_t i = 0; i < 9; ++i)
+							for (int32_t i = 0; i < std::size(pInactiveMonsterNode->nMonUMods); ++i)
 							{
 								if (pUMods[i] != pInactiveMonsterNode->nMonUMods[i])
 								{
@@ -530,7 +532,7 @@ D2UnitStrc* __fastcall SUNITINACTIVE_RestoreInactiveItem(D2GameStrc* pGame, D2Ac
 //D2Game.0x6FCC4270
 void __fastcall SUNITINACTIVE_FreeInactiveUnitLists(D2GameStrc* pGame)
 {
-	for (int32_t i = 0; i < 5; ++i)
+	for (int32_t i = 0; i < std::size(pGame->pInactiveUnitList); ++i)
 	{
 		D2InactiveUnitListStrc* pCurrentList = pGame->pInactiveUnitList[i];
 		while (pCurrentList)

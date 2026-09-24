@@ -1,6 +1,7 @@
 #include "GAME/Clients.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <Fog.h>
 #include <Storm.h>
@@ -86,7 +87,7 @@ int32_t __stdcall CLIENTS_GetExpansionClientCount()
 
     EnterCriticalSection(&gClientListLock_6FD447D0);
 
-    for (int32_t i = 0; i < 256; ++i)
+    for (int32_t i = 0; i < std::size(gpClientList_6FD43FB8); ++i)
     {
         for (D2ClientStrc* pClient = gpClientList_6FD43FB8[i]; pClient; pClient = pClient->pServerNext)
         {
@@ -424,7 +425,7 @@ int32_t __fastcall CLIENTS_AddPlayerToGame(D2ClientStrc* pClient, D2GameStrc* pG
         }
     }
 
-    for (int32_t i = 0; i < 16; ++i)
+    for (int32_t i = 0; i < std::size(pClient->HotkeySkills); ++i)
     {
         if (pClient->HotkeySkills[i].nSkill >= 0 && pClient->HotkeySkills[i].nSkill < sgptDataTables->nSkillsTxtRecordCount)
         {
@@ -493,7 +494,7 @@ D2ClientStrc* __fastcall CLIENTS_AddToGame(D2GameStrc* pGame, int32_t nClientId,
     pClient->tPacketDataList.pTail = nullptr;
     pClient->tPacketDataList.pPacketDataPool = nullptr;
 
-    for (int32_t i = 0; i < 16; ++i)
+    for (int32_t i = 0; i < std::size(pClient->HotkeySkills); ++i)
     {
         pClient->HotkeySkills[i].nSkill = -1;
         pClient->HotkeySkills[i].nHand = 0;

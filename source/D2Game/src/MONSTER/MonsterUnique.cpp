@@ -1,6 +1,7 @@
 #include "MONSTER/MonsterUnique.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 #include <D2Math.h>
@@ -620,7 +621,7 @@ void __fastcall MONSTERUNIQUE_UMod30_AuraEnchanted(D2UnitStrc* pUnit, int32_t nU
     const int32_t nLevel = std::max(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1);
 
     int32_t nMax = 0;
-    for (int32_t i = 0; i < 8; ++i)
+    for (int32_t i = 0; i < std::size(gAuraMods); ++i)
     {
         if (gAuraMods[i].nMinLevel <= nLevel)
         {
@@ -2242,7 +2243,7 @@ BOOL __fastcall sub_6FC6EC10(D2UnitStrc* pUnit, D2MonUModTxt* pMonUModTxtRecord,
         return FALSE;
     }
 
-    for (int32_t i = 0; i < 2; ++i)
+    for (int32_t i = 0; i < std::size(pMonUModTxtRecord->wExclude); ++i)
     {
         const int16_t nExcludeMonType = pMonUModTxtRecord->wExclude[i];
         if (pUnit && pUnit->dwUnitType == UNIT_MONSTER)
@@ -2930,7 +2931,7 @@ D2UnitStrc* __fastcall sub_6FC6FDC0(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, 
     }
 
     constexpr int32_t mods[] = { 1, 2, 3, 4 };
-    for (int32_t i = 0; i < 4; ++i)
+    for (int32_t i = 0; i < std::size(mods); ++i)
     {
         sub_6FC6F670(pMonster, mods[i], 0);
     }

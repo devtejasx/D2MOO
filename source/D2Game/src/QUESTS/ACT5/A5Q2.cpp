@@ -1,5 +1,7 @@
 #include "QUESTS/ACT5/A5Q2.h"
 
+#include <iterator>
+
 #include <DataTbls/LevelsIds.h>
 #include <DataTbls/MonsterIds.h>
 #include <DataTbls/ObjectsIds.h>
@@ -817,7 +819,7 @@ void __fastcall ACT5Q2_UpdateWussieCounters(D2GameStrc* pGame, int32_t nUnused, 
 		nUnitGUID = pWussie->dwUnitId;
 	}
 
-	for (int32_t i = 0; i < 3; ++i)
+	for (int32_t i = 0; i < std::size(pQuestDataEx->unk0x114); ++i)
 	{
 		for (int32_t j = 0; j < 5; ++j)
 		{
@@ -852,7 +854,7 @@ void __fastcall ACT5Q2_UpdateQuestState(D2GameStrc* pGame, D2UnitStrc* pPlayer, 
 		nWussieGUID = pWussie->dwUnitId;
 	}
 
-	for (int32_t i = 0; i < 3; ++i)
+	for (int32_t i = 0; i < std::size(pQuestDataEx->pWussieCoords); ++i)
 	{
 		for (int32_t j = 0; j < 5; ++j)
 		{

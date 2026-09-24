@@ -1,5 +1,7 @@
 #include "D2DataTbls.h"
 
+#include <iterator>
+
 #include "D2Composit.h"
 #include "Units/Units.h"
 
@@ -15,7 +17,7 @@ D2AnimDataTableStrc* __fastcall DATATBLS_LoadAnimDataD2(HD2ARCHIVE hArchive)
 	pAnimDataTable->pBinaryData = ARCHIVE_ALLOC_BUFFER_AND_READ_FILE_TO_IT(hArchive, szPath, nullptr);
 ;
 	D2AnimDataBucketStrc* pBucketBinaryData = (D2AnimDataBucketStrc*)pAnimDataTable->pBinaryData;
-	for (int i = 0; i < 256; ++i)
+	for (int i = 0; i < std::size(pAnimDataTable->pHashTableBucket); ++i)
 	{
 		pAnimDataTable->pHashTableBucket[i] = pBucketBinaryData;
 		const size_t nBucketSize = sizeof(pBucketBinaryData->nbEntries) + sizeof(D2AnimDataRecordStrc) * pBucketBinaryData->nbEntries;

@@ -1,6 +1,7 @@
 #include "OBJECTS/Objects.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <Fog.h>
 
@@ -2099,7 +2100,7 @@ void __fastcall OBJECTS_PopulationHandler(D2GameStrc* pGame, D2ActiveRoomStrc* p
         }
     }
 
-    for (int32_t i = 0; i < 8; ++i)
+    for (int32_t i = 0; i < std::size(pLevelsTxtRecord->nObjGroup); ++i)
     {
         const int32_t nObjGroup = pLevelsTxtRecord->nObjGroup[i];
         uint32_t nProbability = ITEMS_RollRandomNumber(&pRoom->pSeed) % 100;

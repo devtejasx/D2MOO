@@ -3,6 +3,7 @@
 #include <D2BitManip.h>
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2Items.h>
 #include <D2Dungeon.h>
@@ -682,7 +683,7 @@ int32_t __fastcall SKILLITEM_pSpell09_AntidoteThawingPotion(D2GameStrc* pGame, D
     if (pItemsTxtRecord)
     {
         int32_t nResult = 0;
-        for (int32_t i = 0; i < 2; ++i)
+        for (int32_t i = 0; i < std::size(pItemsTxtRecord->wCurseState); ++i)
         {
             const int32_t nCurseState = pItemsTxtRecord->wCurseState[i];
             if (nCurseState > 0 && nCurseState < sgptDataTables->nStatesTxtRecordCount)

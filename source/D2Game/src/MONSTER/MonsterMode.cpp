@@ -1,6 +1,7 @@
 #include "MONSTER/MonsterMode.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 
@@ -260,7 +261,7 @@ void __fastcall sub_6FC627B0(D2UnitStrc* pUnit, int32_t nMode)
     STATLIST_SetStatIfListIsValid(pStatList, STAT_MAXDAMAGE, nMaxDamage, 0);
     STATLIST_SetStatIfListIsValid(pStatList, STAT_TOHIT, nToHit, 0);
 
-    for (int32_t i = 0; i < 3; ++i)
+    for (int32_t i = 0; i < std::size(pMonStatsTxtRecord->nElMode); ++i)
     {
         if (pMonStatsTxtRecord->nElMode[i] && nMode == pMonStatsTxtRecord->nElMode[i])
         {

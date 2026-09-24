@@ -1,4 +1,5 @@
 #include <ctime>
+#include <iterator>
 
 #include "PLAYER/PlrSave2.h"
 
@@ -263,7 +264,7 @@ int32_t __fastcall PLRSAVE2_WriteWaypointData(D2GameStrc* pGame, D2UnitStrc* pUn
     waypointSaveData.unk0x02 = 1;
     waypointSaveData.nRecordSize = sizeof(D2WaypointSaveDataStrc);
 
-    for (int32_t i = 0; i < 3; ++i)
+    for (int32_t i = 0; i < std::size(pPlayerData->pWaypointData); ++i)
     {
         WAYPOINTS_ValidateAndCopyWaypointData(pPlayerData->pWaypointData[i], &waypointSaveData.waypoints[i].flags);
     }
@@ -292,7 +293,7 @@ int32_t __fastcall PLRSAVE2_WritePlrIntroSection(D2GameStrc* pGame, D2UnitStrc* 
     plrIntroSave.nHeader = 0x7701u;
     plrIntroSave.nLength = sizeof(D2PlrIntroSaveStrc);
 
-    for (int32_t i = 0; i < 3; ++i)
+    for (int32_t i = 0; i < std::size(pPlayerData->pPlayerIntro); ++i)
     {
         PLRINTRO_CopyQuestIntroFlagsToBuffer(pPlayerData->pPlayerIntro[i], plrIntroSave.unk0x04[i]);
         PLRINTRO_CopyNpcIntroFlagsToBuffer(pPlayerData->pPlayerIntro[i], plrIntroSave.unk0x1C[i]);
@@ -833,7 +834,7 @@ int32_t __fastcall PLRSAVE2_ReadSaveHeader(D2GameStrc* pGame, D2ClientStrc* pCli
 
     D2GAME_SUNITMSG_FirstFn_6FCC5520(CLIENTS_GetGame(pClient), *ppPlayer, pClient);
 
-    for (int32_t i = 0; i < 16; ++i)
+    for (int32_t i = 0; i < std::size(pSaveHeader->SkillKeys); ++i)
     {
         if (pSaveHeader->SkillKeys[i].nSkill == uint16_t(-1))
         {
@@ -949,7 +950,7 @@ int32_t __fastcall PLRSAVE2_ReadWaypointData(D2GameStrc* pGame, D2UnitStrc* pUni
     }
 
     D2PlayerDataStrc* pPlayerData = UNITS_GetPlayerData(pUnit);
-    for (int32_t i = 0; i < 3; ++i)
+    for (int32_t i = 0; i < std::size(pPlayerData->pWaypointData); ++i)
     {
         D2WaypointDataStrc* pSavedData = &pWaypointSaveData->waypoints[i].flags;
 
@@ -1632,7 +1633,7 @@ int32_t __fastcall PLRSAVE2_ProcessSaveFile(D2GameStrc* pGame, D2ClientStrc* pCl
                 }
                 else
                 {
-                    for (int32_t i = 0; i < 3; ++i)
+                    for (int32_t i = 0; i < std::size(pPlayerData->pPlayerIntro); ++i)
                     {
                         PLRINTRO_CopyBufferToQuestIntroFlags(pPlayerData->pPlayerIntro[i], pPlrIntro->unk0x04[i]);
                         PLRINTRO_CopyBufferToNpcIntroFlags(pPlayerData->pPlayerIntro[i], pPlrIntro->unk0x1C[i]);

@@ -1,5 +1,7 @@
 #include "D2DataTbls.h"
 
+#include <iterator>
+
 #include "D2Items.h"
 #include "D2Seed.h"
 #include <D2Lang.h>
@@ -1395,7 +1397,7 @@ void __fastcall DATATBLS_LoadTreasureClassExTxt(HD2ARCHIVE hArchive)
 			pTCExTxtRecord->nSuperior = pTreasureClassExTxt[i].nSuperior;
 			pTCExTxtRecord->nNormal = pTreasureClassExTxt[i].nNormal;
 
-			for (int nItem = 0; nItem < 10; ++nItem)
+			for (int nItem = 0; nItem < std::size(pTreasureClassExTxt[i].szItem); ++nItem)
 			{
 				if (!pTreasureClassExTxt[i].szItem[nItem][0])
 				{
@@ -1671,7 +1673,7 @@ void __fastcall DATATBLS_LoadHirelingTxt(HD2ARCHIVE hArchive)
 
 	sgptDataTables->pHirelingTxt = (D2HirelingTxt*)DATATBLS_CompileTxt(hArchive, "hireling", pTbl, &sgptDataTables->nHirelingTxtRecordCount, sizeof(D2HirelingTxt));
 
-	for (int i = 0; i < 256; ++i)
+	for (int i = 0; i < std::size(sgptDataTables->nExpansionHirelingStartRecordIds); ++i)
 	{
 		sgptDataTables->nClassicHirelingStartRecordIds[i] = -1;
 		sgptDataTables->nExpansionHirelingStartRecordIds[i] = -1;
@@ -2666,7 +2668,7 @@ void __fastcall DATATBLS_LoadMonEquipTxt(HD2ARCHIVE hArchive)
 				pMonStatsTxtRecord->nMonEquipTxtRecordId = i;
 			}
 
-			for (int j = 0; j < 3; ++j)
+			for (int j = 0; j < std::size(pMonEquipTxtRecord->dwItem); ++j)
 			{
 				if (pMonEquipTxtRecord->nLoc[j] <= BODYLOC_NONE || pMonEquipTxtRecord->nLoc[j] >= BODYLOC_SWRARM
 					|| pMonEquipTxtRecord->dwItem[j] != '    ' && FOG_GetLinkIndex(sgptDataTables->pItemsLinker, pMonEquipTxtRecord->dwItem[j], 1) < 0)

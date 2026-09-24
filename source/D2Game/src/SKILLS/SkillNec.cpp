@@ -1,6 +1,7 @@
 #include "SKILLS/SkillNec.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 #include <D2Math.h>
@@ -497,7 +498,7 @@ int32_t __fastcall SKILLS_SrvDo030_Curse(D2GameStrc* pGame, D2UnitStrc* pUnit, i
 
     v29.nAuraTargetState = pSkillsTxtRecord->wAuraTargetState;
 
-    for (int32_t i = 0; i < 3; ++i)
+    for (int32_t i = 0; i < std::size(pSkillsTxtRecord->wAuraEvent); ++i)
     {
         v29.nAuraEvent[i] = pSkillsTxtRecord->wAuraEvent[i];
         v29.nAuraEventFunc[i] = pSkillsTxtRecord->wAuraEventFunc[i];
@@ -1032,7 +1033,7 @@ int32_t __fastcall D2GAME_SetSummonPassiveStats_6FD0C530(D2GameStrc* pGame, D2Un
     STATLIST_SetUnitStat(pPet, STAT_MAXHP, nNewMaxHp, 0);
     STATLIST_SetUnitStat(pPet, STAT_HITPOINTS, nNewMaxHp, 0);
 
-    for (int32_t i = 0; i < 5; ++i)
+    for (int32_t i = 0; i < std::size(pSkillsTxtRecord->wSumSkill); ++i)
     {
         D2SkillsTxt* pSummonSkillsTxtRecord = SKILLS_GetSkillsTxtRecord(pSkillsTxtRecord->wSumSkill[i]);
         if (pSummonSkillsTxtRecord)
@@ -1054,7 +1055,7 @@ int32_t __fastcall D2GAME_SetSummonPassiveStats_6FD0C530(D2GameStrc* pGame, D2Un
     {
         SUNITEVENT_Unregister(pGame, pPet, 1, pSkillsTxtRecord->nAuraState);
 
-        for (int32_t i = 0; i < 3; ++i)
+        for (int32_t i = 0; i < std::size(pSkillsTxtRecord->wAuraEvent); ++i)
         {
             if (pSkillsTxtRecord->wAuraEvent[i] < 0)
             {

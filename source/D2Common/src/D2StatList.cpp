@@ -1,5 +1,7 @@
 #include "D2StatList.h"
 
+#include <iterator>
+
 #include <D2BitManip.h>
 #include "D2DataTbls.h"
 #include "D2Environment.h"
@@ -500,7 +502,7 @@ int __fastcall sub_6FDB64A0(D2StatListExStrc* pStatListEx, D2SLayerStatIdStrc::P
 
 		bool bUpdate = TRUE;
 		
-		for (int nCounter = 0; nCounter < 3; ++nCounter)
+		for (int nCounter = 0; nCounter < std::size(pItemStatCostTxtRecord->wOpStat); ++nCounter)
 		{
 			if (pItemStatCostTxtRecord->wOpStat[nCounter] == uint16_t(-1))
 			{

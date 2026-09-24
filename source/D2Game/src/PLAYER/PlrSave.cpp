@@ -1,5 +1,7 @@
 #include "PLAYER/PlrSave.h"
 
+#include <iterator>
+
 #include <Fog.h>
 #include <File.h>
 #include <CRC.h>
@@ -1020,7 +1022,7 @@ int32_t __fastcall D2GAME_SAVE_ReadWaypointData_6FC8AD50(D2UnitStrc* pUnit, uint
     }
 
     uint8_t* pData = &pSource[8];
-    for (int32_t i = 0; i < 3; ++i)
+    for (int32_t i = 0; i < std::size(pPlayerData->pWaypointData); ++i)
     {
         D2WaypointDataStrc* pWaypointData = (D2WaypointDataStrc*)pData;
         if (pWaypointData->nFlags[0] != 0x102 && pWaypointData->nFlags[0] != 0x101 && pWaypointData->nFlags[0] != 0)

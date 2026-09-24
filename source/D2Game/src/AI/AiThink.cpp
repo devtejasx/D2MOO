@@ -1,6 +1,7 @@
 #include "AI/AiThink.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 #include <D2Math.h>
@@ -531,7 +532,7 @@ void __fastcall AITHINK_Fn006_Fallen(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiT
 	int32_t bBreak = 0;
 	for (int32_t j = 0; j < nNumRooms; ++j)
 	{
-		for (int32_t i = 0; i < 4; ++i)
+		for (int32_t i = 0; i < std::size(ppRoomList[j]->nLastDeadGUIDs); ++i)
 		{
 			D2UnitStrc* pCorpse = SUNIT_GetServerUnit(pGame, UNIT_MONSTER, ppRoomList[j]->nLastDeadGUIDs[i]);
 			if (pCorpse && pCorpse->dwAnimMode == MONMODE_DEATH && (uint32_t)AIUTIL_GetDistanceToCoordinates_NoUnitSize(pCorpse, nX, nY) < 15)

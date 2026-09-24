@@ -1,6 +1,7 @@
 #include "GAME/Game.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <timeapi.h>
 
@@ -1156,7 +1157,7 @@ void __fastcall GAME_FreeGame(D2GameGUID nGameGUID, D2GameStrc* pGame)
 
     EnterCriticalSection(&gCriticalSection_6FD45800);
     
-    for (int32_t i = 0; i < 1024; ++i)
+    for (int32_t i = 0; i < std::size(gnGamesGUIDs_6FD447F8); ++i)
     {
         if (gnGamesGUIDs_6FD447F8[i] == nGameGUID)
         {
@@ -2567,7 +2568,7 @@ void __stdcall D2Game_10053(int16_t* pCount, int32_t nArraySize)
 {
     memset(pCount, 0, nArraySize);
 
-    for (int32_t i = 0; i < 1024; ++i)
+    for (int32_t i = 0; i < std::size(gnGamesGUIDs_6FD447F8); ++i)
     {
         const int32_t nGameGuid = gnGamesGUIDs_6FD447F8[i];
         if (nGameGuid && nGameGuid != -1)

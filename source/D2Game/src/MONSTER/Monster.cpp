@@ -1,6 +1,7 @@
 #include "MONSTER/Monster.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 #include <D2Math.h>
@@ -244,7 +245,7 @@ void __fastcall MONSTER_InitializeStatsAndSkills(D2GameStrc* pGame, D2ActiveRoom
     }
 
     pUnit->pSkills = SKILLS_AllocSkillList(pGame->pMemoryPool);
-    for (int32_t i = 0; i < 8; ++i)
+    for (int32_t i = 0; i < std::size(pMonStatsTxtRecord->nSkLvl); ++i)
     {
         if (pMonStatsTxtRecord->nSkill[i] >= 0)
         {

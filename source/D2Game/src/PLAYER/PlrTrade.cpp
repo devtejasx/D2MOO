@@ -1,6 +1,7 @@
 #include "PLAYER/PlrTrade.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <Fog.h>
 #include <Storm.h>
@@ -558,7 +559,7 @@ void __fastcall PLRTRADE_CreateCubeOutputs(D2GameStrc* pGame, D2UnitStrc* pUnit,
     D2UnitStrc* pOutputs[3] = {};
     int32_t bRemove[3] = {};
 
-    for (int32_t nCounter = 0; nCounter < 3; ++nCounter)
+    for (int32_t nCounter = 0; nCounter < std::size(pCubeMainTxt->pOutputItem); ++nCounter)
     {
         D2CubeOutputItem* pCubeOutput = &pCubeMainTxt->pOutputItem[nCounter];
         if (pCubeOutput->wItemFlags & (CUBEFLAG_OUT_REMOVE | CUBEFLAG_OUT_UNSOCKET))
@@ -743,12 +744,12 @@ void __fastcall PLRTRADE_CreateCubeOutputs(D2GameStrc* pGame, D2UnitStrc* pUnit,
 
                     // TODO: Check offset of pItemDrop.nPrefix & pItemDrop.nSuffix
 
-                    for (int32_t i = 0; i < 3; ++i)
+                    for (int32_t i = 0; i < std::size(pItemDrop.nPrefix); ++i)
                     {
                         pItemDrop.nPrefix[i] = pCubeOutput->wPrefixId[i];
                     }
 
-                    for (int32_t i = 0; i < 3; ++i)
+                    for (int32_t i = 0; i < std::size(pCubeOutput->wSuffixId); ++i)
                     {
                         pItemDrop.nSuffix[i] = pCubeOutput->wSuffixId[i];
                     }
@@ -836,7 +837,7 @@ void __fastcall PLRTRADE_CreateCubeOutputs(D2GameStrc* pGame, D2UnitStrc* pUnit,
 
             if (bAddCraftStats)
             {
-                for (int32_t i = 0; i < 5; ++i)
+                for (int32_t i = 0; i < std::size(pCubeOutput->pParam); ++i)
                 {
                     if (pCubeOutput->pParam[i].nMod >= 0)
                     {

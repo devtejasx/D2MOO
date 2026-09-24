@@ -1,5 +1,7 @@
 #include "Drlg/D2DrlgDrlg.h"
 
+#include <iterator>
+
 #include "D2DataTbls.h"
 #include "Drlg/D2DrlgDrlgAnim.h"
 #include "Drlg/D2DrlgDrlgRoom.h"
@@ -901,7 +903,7 @@ D2DrlgWarpStrc* __fastcall DRLG_GetDrlgWarpFromLevelId(D2DrlgStrc* pDrlg, int nL
 	pDrlgWarp->nLevel = nLevelId;
 
 	pLevelDefBin = DATATBLS_GetLevelDefRecord(nLevelId);
-	for (int i = 0; i < 8; ++i)
+	for (int i = 0; i < std::size(pDrlgWarp->nVis); ++i)
 	{
 		pDrlgWarp->nVis[i] = pLevelDefBin->dwVis[i];
 		pDrlgWarp->nWarp[i] = pLevelDefBin->dwWarp[i];
@@ -916,7 +918,7 @@ D2DrlgWarpStrc* __fastcall DRLG_GetDrlgWarpFromLevelId(D2DrlgStrc* pDrlg, int nL
 //D2Common.0x6FD753F0
 void __fastcall DRLG_SetWarpId(D2DrlgWarpStrc* pDrlgWarp, int nVis, int nWarp, int nId)
 {
-	for (int i = 0; i < 8; ++i)
+	for (int i = 0; i < std::size(pDrlgWarp->nWarp); ++i)
 	{
 		if (pDrlgWarp->nVis[i] == nVis)
 		{
@@ -927,7 +929,7 @@ void __fastcall DRLG_SetWarpId(D2DrlgWarpStrc* pDrlgWarp, int nVis, int nWarp, i
 
 	if (nId == -1)
 	{
-		for (int i = 0; i < 8; ++i)
+		for (int i = 0; i < std::size(pDrlgWarp->nVis); ++i)
 		{
 			if (!pDrlgWarp->nVis[i] && pDrlgWarp->nWarp[i] == -1)
 			{

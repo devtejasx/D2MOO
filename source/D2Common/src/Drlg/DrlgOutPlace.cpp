@@ -22,6 +22,7 @@
 
 #include <cmath>
 #include <algorithm>
+#include <iterator>
 
 int dword_6FDEA6FC;
 
@@ -628,7 +629,7 @@ void __fastcall DRLGOUTPLACE_SetBlankBorderGridCells(D2DrlgLevelStrc* pLevel)
 		{{  1,  1 }, { -1, -1 }}
 	};
 
-	for (int k = 0; k < 4; ++k)
+	for (int k = 0; k < std::size(aOffsets); ++k)
 	{
 		D2CoordStrc tStartPos = aOffsets[k][0];
 		D2CoordStrc tDirection = aOffsets[k][1];
@@ -1557,7 +1558,7 @@ BOOL __fastcall sub_6FD82050(D2DrlgLevelLinkDataStrc* pLevelLinkData, int nItera
 	{
 		if (gAct1WildernessDrlgLink[nIteration].nLevel == LEVEL_BURIALGROUNDS)
 		{
-			for (int i = 0; i < 15; ++i)
+			for (int i = 0; i < std::size(gAct1WildernessDrlgLink); ++i)
 			{
 				if (i != nIteration && gAct1WildernessDrlgLink[i].nLevelLink == nLevelLink && pLevelLinkData->nRand2[nIteration] == pLevelLinkData->nRand2[i])
 				{
@@ -1714,7 +1715,7 @@ void __fastcall sub_6FD82360(D2DrlgLevelStrc* pLevel, int nIteration, int* pRand
 
 	if (pLevel->nDrlgType == DRLGTYPE_OUTDOOR)
 	{
-		for (int i = 0; i < 15; ++i)
+		for (int i = 0; i < std::size(stru_6FDD06C0); ++i)
 		{
 			if (pLevel->nLevelId == stru_6FDD06C0[i].nLevelId || !stru_6FDD06C0[i].nLevelId)
 			{

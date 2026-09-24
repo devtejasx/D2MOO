@@ -1,6 +1,7 @@
 #include "CmnSubtile.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2Math.h>
 #include <Fog.h>
@@ -438,7 +439,7 @@ void __fastcall DGFX_InitGouraudCache_6FA72570()
     // TODO: Check, Names
     int32_t v1 = 0;
     int32_t v10 = 0;
-    for (int32_t i = 0; i < 32; ++i)
+    for (int32_t i = 0; i < std::size(byte_6FA85220); ++i)
     {
         int32_t nVal = i << GOURAUD_SHIFT;
         const int32_t nOriginalValue = nVal;

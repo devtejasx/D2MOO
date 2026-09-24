@@ -1,6 +1,7 @@
 #include "MONSTER/MonsterAI.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <Fog.h>
 #include <D2BitManip.h>
@@ -260,7 +261,7 @@ void __fastcall MONSTERAI_UpdateMercStatsAndSkills(D2GameStrc* pGame, D2UnitStrc
     const int32_t nHpRegen = std::max(STATLIST_GetUnitBaseStat(pHireling, STAT_MAXHP, 0) / 2000, 0);
     STATLIST_SetUnitStat(pHireling, STAT_HPREGEN, nHpRegen, 0);
 
-    for (int32_t i = 0; i < 6; ++i)
+    for (int32_t i = 0; i < std::size(pHirelingTxtRecord->nSLvlPerLvl); ++i)
     {
         const int32_t nSkillId = pHirelingTxtRecord->dwSkill[i];
         D2SkillsTxt* pSkillsTxtRecord = SKILLS_GetSkillsTxtRecord(nSkillId);

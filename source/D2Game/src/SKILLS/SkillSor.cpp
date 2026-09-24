@@ -1,5 +1,7 @@
 #include "SKILLS/SkillSor.h"
 
+#include <iterator>
+
 #include <D2BitManip.h>
 
 #include <D2Collision.h>
@@ -375,7 +377,7 @@ int32_t __fastcall SKILLS_SrvDo018_DefensiveBuff(D2GameStrc* pGame, D2UnitStrc* 
     {
         SUNITEVENT_Unregister(pGame, pUnit, 1, pSkillsTxtRecord->nAuraState);
 
-        for (int32_t i = 0; i < 3; ++i)
+        for (int32_t i = 0; i < std::size(pSkillsTxtRecord->wAuraEvent); ++i)
         {
             if (pSkillsTxtRecord->wAuraEvent[i] < 0)
             {
@@ -632,7 +634,7 @@ int32_t __fastcall SKILLS_SrvDo023_Blaze_EnergyShield_SpiderLay(D2GameStrc* pGam
     if (pSkillsTxtRecord->wAuraEvent[0] >= 0)
     {
         SUNITEVENT_Unregister(pGame, pUnit, 1, pSkillsTxtRecord->nAuraState);
-        for (int32_t i = 0; i < 3; ++i)
+        for (int32_t i = 0; i < std::size(pSkillsTxtRecord->wAuraEvent); ++i)
         {
             if (pSkillsTxtRecord->wAuraEvent[i] < 0)
             {

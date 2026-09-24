@@ -1,6 +1,7 @@
 #include "PLAYER/Player.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <Fog.h>
 
@@ -69,7 +70,7 @@ void __fastcall PLAYER_Create(D2GameStrc* pGame, D2UnitStrc* pPlayer, int32_t nP
     D2PlayerDataStrc* pPlayerData = UNITS_GetPlayerData(pPlayer);
     if (pPlayerData)
     {
-        for (int32_t i = 0; i < 3; ++i)
+        for (int32_t i = 0; i < std::size(pPlayerData->pPlayerIntro); ++i)
         {
             pPlayerData->pPlayerIntro[i] = PLRINTRO_Create(pGame);
         }
@@ -123,7 +124,7 @@ void __fastcall PLAYER_Destroy(D2GameStrc* pGame, D2UnitStrc* pPlayer)
         }
         pPlayerData->unk0x98 = nullptr;
 
-        for (int32_t i = 0; i < 3; ++i)
+        for (int32_t i = 0; i < std::size(pPlayerData->pPlayerIntro); ++i)
         {
             PLRINTRO_Destroy(pGame, pPlayerData->pPlayerIntro[i]);
             pPlayerData->pPlayerIntro[i] = nullptr;

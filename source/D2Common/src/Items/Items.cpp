@@ -1,4 +1,7 @@
 #include "D2Items.h"
+
+#include <iterator>
+
 #include <Units/Item.h>
 #include "D2BitManip.h"
 #include "D2Composit.h"
@@ -2415,7 +2418,7 @@ int __fastcall ITEMS_CalculateTransactionCost(D2UnitStrc* pPlayer, D2UnitStrc* p
 			nRepCost = pNpcTxtRecord->dwRepMult * nRepCost / 1024;
 		}
 
-		for (int i = 0; i < 3; ++i)
+		for (int i = 0; i < std::size(pNpcTxtRecord->dwQuestFlag); ++i)
 		{
 			if (pNpcTxtRecord->dwQuestFlag[i] && (QUESTRECORD_GetQuestState(pQuestFlags, pNpcTxtRecord->dwQuestFlag[i], QFLAG_REWARDGRANTED) == 1
 												  || QUESTRECORD_GetQuestState(pQuestFlags, pNpcTxtRecord->dwQuestFlag[i], QFLAG_REWARDPENDING) == 1))

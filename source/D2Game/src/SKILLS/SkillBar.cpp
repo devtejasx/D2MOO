@@ -1,6 +1,7 @@
 #include "SKILLS/SkillBar.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2DataTbls.h>
 #include <DataTbls/SkillsTbls.h>
@@ -858,7 +859,7 @@ int32_t __fastcall SKILLS_SrvSt38_Whirlwind(D2GameStrc* pGame, D2UnitStrc* pUnit
     {
         SUNITEVENT_Unregister(pGame, pUnit, 1, pSkillsTxtRecord->nAuraState);
 
-        for (int32_t i = 0; i < 3; ++i)
+        for (int32_t i = 0; i < std::size(pSkillsTxtRecord->wAuraEvent); ++i)
         {
             if (pSkillsTxtRecord->wAuraEvent[i] < 0)
             {

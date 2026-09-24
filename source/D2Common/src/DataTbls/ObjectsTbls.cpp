@@ -1,4 +1,7 @@
 #include "D2DataTbls.h"
+
+#include <iterator>
+
 #include <D2Lang.h>
 
 
@@ -174,7 +177,7 @@ void __fastcall DATATBLS_LoadObjectsTxt(HD2ARCHIVE hArchive)
 		memset(sgptDataTables->pObjectsTxt[i].wszName, 0x00, sizeof(sgptDataTables->pObjectsTxt[i].wszName));
 		Unicode::strncpy(sgptDataTables->pObjectsTxt[i].wszName, D2LANG_GetStringByReferenceString(sgptDataTables->pObjectsTxt[i].szName), sizeof(sgptDataTables->pObjectsTxt[i].szName));
 
-		for (int j = 0; j < 8; ++j)
+		for (int j = 0; j < std::size(sgptDataTables->pObjectsTxt[i].dwFrameCnt); ++j)
 		{
 			sgptDataTables->pObjectsTxt[i].dwFrameCnt[j] <<= 8;
 		}

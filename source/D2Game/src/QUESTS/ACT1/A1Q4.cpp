@@ -1,6 +1,7 @@
 #include "QUESTS/ACT1/A1Q4.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <DataTbls/LevelsIds.h>
 #include <DataTbls/MonsterIds.h>
@@ -812,7 +813,7 @@ int32_t __fastcall OBJECTS_OperateFunction09_Monolith(D2ObjOperateFnStrc* pOp, i
 
 	D2CoordStrc monolithCoords = {};
 
-	for (int32_t i = 0; i < 5; ++i)
+	for (int32_t i = 0; i < std::size(pQuestDataEx->nMonolithGUIDs); ++i)
 	{
 		if (pQuestDataEx->nStoneOrder[i] == OBJECT_STONELAMBDA)
 		{
