@@ -7,6 +7,7 @@
 
 #include "D2Net.h"
 #include "Server.h"
+#include "PacketSizeTables.h"
 
 
 #pragma warning (disable: 6387)
@@ -461,7 +462,7 @@ void __fastcall CLIENT_ReadPacketFromBuffer(D2PacketBufferStrc* pBuffer, int32_t
 		pPacket->pNext = nullptr;
 
 		const uint8_t nHeader = pPacketBuffer->data[0];
-		if (nHeader >= 0xB4u)
+		if (nHeader >= std::size(gServerPacketSizeTable))
 		{
 			FOG_DisplayHalt("Bad message type", __FILE__, __LINE__);
 			exit(-1);
@@ -487,7 +488,7 @@ void __fastcall CLIENT_ReadPacketFromBuffer(D2PacketBufferStrc* pBuffer, int32_t
 		}
 		else
 		{
-			if (nHeader >= 0xB4u)
+			if (nHeader >= std::size(gServerPacketSizeTable))
 			{
 				FOG_DisplayHalt("Bad message type", __FILE__, __LINE__);
 				exit(-1);

@@ -7,6 +7,7 @@ target_sources(${D2NetImplName}
   PRIVATE
     src/Client.cpp
     src/D2Net.cpp
+    src/PacketSizeTables.h
     src/Server.cpp
 
     include/Client.h
