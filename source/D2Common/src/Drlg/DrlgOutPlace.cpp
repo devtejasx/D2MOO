@@ -559,7 +559,7 @@ int __fastcall sub_6FD80BE0(int a1, int a2, int a3)
 {
 	const int lutIndex = a1 + 3 * a2 + 4;
 	D2_MAYBE_UNUSED(lutIndex);
-	assert(lutIndex >= 0 && lutIndex <= ARRAY_SIZE(nBorderIndices));
+	assert(lutIndex >= 0 && lutIndex < ARRAY_SIZE(nBorderIndices));
 	int nIndex = nBorderIndices[a1 + 3 * a2 + nBorderIndicesOffset_sub_6FD80BE0];
 
 	if (a3 < 4)
@@ -601,7 +601,7 @@ int __fastcall sub_6FD80C10(int a1, int a2, int a3, int a4, int a5)
 		a3 -= 2;
 	}
 	const int lutIndex = a2 + a1 + 9 * (a4 + a3) + nBorderIndicesOffset_sub_6FD80C10;
-	assert(lutIndex >= 0 && lutIndex <= ARRAY_SIZE(nBorderIndices));
+	assert(lutIndex >= 0 && lutIndex < ARRAY_SIZE(nBorderIndices));
 
 	v6 = nBorderIndices[lutIndex];
 

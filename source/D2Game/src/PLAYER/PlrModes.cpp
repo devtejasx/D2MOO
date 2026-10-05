@@ -1738,7 +1738,7 @@ void __fastcall D2GAME_EVENTS_Callback_6FC81BD0(D2GameStrc* pGame, D2UnitStrc* p
     };
 	static_assert(EVENTTYPE_COUNT == std::size(off_6FD28F40), "missing callbacks");
 
-    if (nEvent >= 0 && nEvent <= std::size(off_6FD28F40))
+    if (nEvent >= 0 && nEvent < std::size(off_6FD28F40))
     {
         EventCallbackFunction pCallback = off_6FD28F40[nEvent];
         if (pCallback)
