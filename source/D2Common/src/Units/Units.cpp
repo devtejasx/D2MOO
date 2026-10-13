@@ -1625,7 +1625,7 @@ __forceinline void __fastcall UNITS_UpdateOtherAnimRateAndVelocity(D2UnitStrc* p
 
 
 //1.10f: Inlined
-//1.13c: D2Common.0x6FD80BD0
+//1.13c: D2Common.0x6FD80C70
 BOOL UNITS_CanAnimModeUseVelocityModifier(int nUnitType, int nAnimMode, D2UnitStrc* pUnit, int nClassId)
 {
 	D2_ASSERT((nUnitType == UNIT_PLAYER) || (nUnitType == UNIT_MONSTER));
