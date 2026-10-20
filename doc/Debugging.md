@@ -16,7 +16,7 @@ Project will already be configured to use it by default, but you may confirm it 
 
 D2MOO does not patch all functions by default. This also means that you will only have symbols (`.pdb` file) for D2MOO's version of the functions.
 
-Such functions are listed in the `XXXXX.patch.cpp` files in the [D2.Detours.patches/1.10f](D2.Detours.patches/1.10f) folder. You can only put breakpoints through source code for functions marked with `PatchAction::FunctionReplaceOriginalByPatch`.
+Such functions are listed in the `XXXXX.patch.cpp` files in the [D2.Detours.patches/1.10f](../D2.Detours.patches/1.10f) folder. You can only put breakpoints through source code for functions marked with `PatchAction::FunctionReplaceOriginalByPatch`.
 
 Note that you can still break in the original game `.dll`s, however you will not have any source mapping. Keep in mind that there are 2 `.dll`s loaded with the same name: the original one and D2MOO's. See also [Patching](Patching.md).
 
