@@ -369,7 +369,6 @@ void __fastcall DRLGPRESET_ParseDS1File(D2DrlgFileStrc* pDrlgFile, HD2ARCHIVE hA
 					for (int j = 0; j < 3; ++j)
 					{
 						szItemCode[j] = tolower(szItemCode[j]);
-						++j;
 					}
 
 					DATATBLS_GetItemRecordFromItemCode(DATATBLS_StringToCode(szItemCode), &nUnitId);
